@@ -1,0 +1,22 @@
+@import 'function.scss';
+.nav-pills{
+    .nav-link{
+        color: $secondary-color!important;
+        background: transparent!important;
+        border: 1px solid $secondary-color!important;
+    }
+    .active{
+        background-color: $secondary-color!important;
+        color: $font-color!important;
+    }
+    .nav-link:hover{
+        background-color: $secondary-color!important;
+        color: $font-color!important;
+    }
+}
+.btn{
+    border-width: 1px!important;
+}
+.btn:hover{
+    border-width: 1px!important;
+}
