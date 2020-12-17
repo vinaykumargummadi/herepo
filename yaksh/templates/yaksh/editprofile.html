@@ -1,15 +1,17 @@
 {% extends template  %}
+{% load static %}
 {% block title %} Edit Profile {% endblock %}
 {% block pagetitle %} My Profile {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/editprofile.css' %}">
+{% endblock %}
 {% block main %}
 <div class="container">
-    <br>
+    <hr>
     <form action="{% url 'yaksh:edit_profile'%}" method="post" >
       {% csrf_token %}
-        <div class="row justify-content-center form-group">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="row">
             <form action="" method="post">
-                <fieldset>
                     {% csrf_token %}
                         {% if form.errors %}
                             {% for field in form %}
@@ -31,25 +33,21 @@
                                 </div>
                             {% endfor %}
                         {% endif %}
-                        <div class="card">
                             {% for field in form %}
-                            <div class="form-group">
-                                <label>
-                                    {{ field.label }}
-                                </label>
-                                {{ field }}
+                            <div class="form-group col-md-4">
+                                    <label>
+                                        {{ field.label }}
+                                    </label>
+                                    {{ field }}
                             </div>
                             {% endfor %}
-                        </div>
-                        <br>
-                        <br>
-                    <button class="btn btn-success btn-lg" type="submit">Update</button>&nbsp;&nbsp;
-                    <a href="{% url 'yaksh:index' %}" class="btn btn-primary btn-lg">Cancel</a>
-                </fieldset>
-            </form>
-        </div>
-    </div>
+                        </form>
+                    </div>
+                    <div class="row d-flex justify-content-center my-3">
+                        <button class="btn btn-success btn-block col-md-3 col-6 m-1" type="submit">Update</button>
+                        <a href="{% url 'yaksh:index' %}" class="btn btn-primary btn-block col-md-3 col-6 m-1">Cancel</a>
+                    </div>
     </center>
     </form>
+    {% endblock main %}
 </div>
-{% endblock main %}

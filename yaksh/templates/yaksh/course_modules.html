@@ -1,7 +1,7 @@
 
 {% extends "user.html" %}
 {% load custom_filters %}
-{% load static %} 
+{% load static %}  
 {% block title %} Contest Modules {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/course_modules.css' %}">
@@ -9,10 +9,9 @@
 {% block main %}
 <div class="container">
     <div class="card">
-        <div class="card-header d-flex align-items-center">
-            {{ course.name }}
-            <br>
-            <a href="{% url "yaksh:course_forum" course.id %}" class="btn btn-outline-info pull-right m-2">Discussion Forum</a>
+        <div class="card-header row d-flex justify-content-center align-items-center">
+            <h4 class="col-md-6 col-12 course-title">{{ course.name }}</h4>
+            <a href="{% url "yaksh:course_forum" course.id %}" class="btn m-2 col-md-4 col-10">Discussion Forum</a>
         </div>
         <div class="card-body">
             {% if course.view_grade %}
@@ -63,7 +62,7 @@
                                 {{ module.name|title }}
                             </div>
                             <div class="col-md-3 col-12">
-                                <a class="card-link btn btn-outline-info btn-block m-1" data-toggle="collapse" href="#collapse-{{module.id}}">
+                                <a class="card-link btn btn-outline-info btn-block btn-custom m-1" data-toggle="collapse" href="#collapse-{{module.id}}">
                                     Details&nbsp;<i class="fa fa-toggle-down"></i>
                                 </a>
                             </div>
@@ -79,7 +78,7 @@
                                     Continue
                                 </div>
                                 {% else %}
-                                <div class="btn btn-success btn-block m-1">
+                                <div class="btn btn-outline-success btn-block m-1">
                                     Start
                                 </div>
                                 {% endif %}

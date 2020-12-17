@@ -1,13 +1,13 @@
 .form {
-  background-color: #12232E;
-  color: #EEFBFB;
+  background-color: #09577A;
+  color: #fff;
   border-radius: 50px;
 }
 
 .form fieldset {
   border-width: 2px;
   border-style: dashed;
-  border-color: #EEFBFB;
+  border-color: #fff;
   border-radius: 50px;
 }
 

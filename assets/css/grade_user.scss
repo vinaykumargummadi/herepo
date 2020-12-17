@@ -1,4 +1,8 @@
 @import 'function.scss';
+@include button-colors;
+.quiz-active{
+    color: $font-color!important;
+} 
 .card{
     .card-header{
         background: transparent;

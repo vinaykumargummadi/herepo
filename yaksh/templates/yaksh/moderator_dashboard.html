@@ -16,11 +16,11 @@
     </center>
     <hr>
     <center>
-        <a href="{% url 'yaksh:add_course' %}" class="btn addcontest-btn m-1">
+        <a href="{% url 'yaksh:add_course' %}" class="btn addcontest-btn m-1 btn-custom">
             <span class=" fa fa-plus-circle"></span>&nbsp;
             Add Contest
         </a>
-        <a href="{% url 'yaksh:create_demo_course' %}" class="btn createcontest-btn">
+        <a href="{% url 'yaksh:create_demo_course' %}" class="btn createcontest-btn btn-custom">
             <span class=" fa fa-plus-circle"></span>&nbsp;
             Create Demo Contest
         </a>
@@ -44,12 +44,12 @@
         </div>
     {% else %}
         {% include "yaksh/paginator.html" %}
-        <br>
+        <br> 
         <div id="accordion" class="accordion">
             {% for course in courses %}
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
+                        <div class="row text-center">
                             <div class="col-md-4">
                                 <h4 data-toggle="tooltip" title="{{course.name}}">
                                     {{ course.name | truncatechars:40 }}
@@ -66,14 +66,14 @@
                                     </span>
                                 {% endif %}
                             </div>
-                            <div class="col-md-3">
-                                <a href="{% url 'yaksh:course_detail' course.id %}" class="btn btn-primary">
+                            <div class="col-md-3 my-2">
+                                <a href="{% url 'yaksh:course_detail' course.id %}" class="btn btn-custom">
                                     <i class="fa fa-tasks"></i>
                                     Manage Contest
                                 </a>
                             </div>
-                            <div class="col-md">
-                                <a class="card-link btn btn-info" data-toggle="collapse" href="#collapse{{course.id}}">
+                            <div class="col-md my-2">
+                                <a class="card-link btn  btn-custom" data-toggle="collapse" href="#collapse{{course.id}}">
                                     <i class="fa fa-toggle-down" id="toggle_course_{{course.id}}"></i>
                                     Details
                                 </a>

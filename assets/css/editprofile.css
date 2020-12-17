@@ -1,1 +1,12 @@
-/* No CSS *//*# sourceMappingURL=editprofile.css.map */
+.btn-custom {
+  color: #09577A !important;
+  background-color: transparent !important;
+  border-width: 1px !important;
+  border-color: #09577A !important;
+}
+
+.btn-custom:hover {
+  color: #fff !important;
+  background-color: #09577A !important;
+}
+/*# sourceMappingURL=editprofile.css.map */

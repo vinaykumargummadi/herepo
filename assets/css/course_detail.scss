@@ -1,0 +1,9 @@
+@import 'function.scss';
+@include button-colors;
+.jumbotron{
+    background: transparent;
+    border-color: $primary-color;
+    .display-4{
+        color: $primary-color;
+    }
+} 

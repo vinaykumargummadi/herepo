@@ -1,23 +1,28 @@
 {% extends "manage.html" %}
-{% load custom_filters %}
+{% load custom_filters %} 
+{% load static %}
 {% block title %} Add/Edit Grading {% endblock %}
 {% block pagetitle %} Add/Edit Grading {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/add_grades.css' %}">
+{% endblock %}
+
 {% block main %}
 <html>
 <div class="row">
     <div class="col-md-8">
-        <ul class="nav nav-pills" id="course_tabs">
-            <li class="nav-item">
+        <ul class="nav nav-pills d-flex justify-content-center" id="course_tabs">
+            <li class="nav-item m-1">
                 <a class="nav-link" href="{% url 'yaksh:courses' %}">
                     My Courses
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item m-1">
                 <a class="nav-link" href="{% url 'yaksh:add_course' %}">
                     Add/Edit Course
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item m-1">
                 <a href="{% url 'grades:grading_systems'%}" class="active nav-link" >
                     Add/View Grading Systems
                 </a>
@@ -26,7 +31,7 @@
     </div>
 </div>
 <hr>
-<a href="{% url 'grades:grading_systems'%}" class="btn btn-primary btn-lg">
+<a href="{% url 'grades:grading_systems'%}" class="btn btn-lg btn-custom m-1">
     View Grading Systems
 </a>
 <br><br>
@@ -100,8 +105,8 @@
         </div>
     </table>
     {% if not is_default %}
-        <input type="submit" id="add" name="add" value="Add/Delete Grade Range" class="btn btn-info btn-lg">
-        <input type="submit" id="save" name="save" value="Save" class="btn btn-success btn-lg">
+        <input type="submit" id="add" name="add" value="Add/Delete Grade Range" class="btn btn-lg btn-custom add-btn my-1">
+        <input type="submit" id="save" name="save" value="Save" class="btn btn-lg btn-custom save-btn my-1">
     {% else %}
         <div class="alert alert-warning">
             Note: This is a default grading system. You cannot change this.

@@ -3,14 +3,14 @@
 {% block pagetitle %} View Grading Systems {% endblock %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/contest.css' %}">
+<link rel="stylesheet" href="{% static 'css/courses.css' %}">
 {% endblock %}
 {% block main %}
 <html>
     <hr>
     <div class="row">
         <div class="col-md-8">
-            <ul class="nav nav-pills" id="course_tabs">
+            <ul class="nav nav-pills d-flex justify-content-center" id="course_tabs">
                 <li class="nav-item">
                     <a class="nav-link m-1" href="{% url 'yaksh:courses' %}">
                         My Courses
@@ -30,12 +30,12 @@
         </div>
     </div>
     <hr>
-    <a href="{% url 'grades:add_grade' %}" class="btn btn-outline-success btn-lg m-1">
+    <a href="{% url 'grades:add_grade' %}" class="btn btn-lg btn-outline-success m-1">
         <span class=" fa fa-plus-circle"></span>&nbsp;Add a Grading System
     </a>
     <br><br>
     <b> Available Grading Systems: </b>
-    <table class="table">
+    <table class="table table-responsive-sm">
         <tr>
             <th>Grading System</th>
             <th>Grading Ranges</th>

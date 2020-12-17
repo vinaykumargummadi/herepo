@@ -1,0 +1,43 @@
+.btn-custom {
+  color: #09577A !important;
+  background-color: transparent !important;
+  border-width: 1px !important;
+  border-color: #09577A !important;
+}
+
+.btn-custom:hover {
+  color: #fff !important;
+  background-color: #09577A !important;
+}
+
+.nav-pills .nav-item .nav-link {
+  background-color: transparent;
+  border: 1px solid #09577A !important;
+  color: #09577A !important;
+}
+
+.nav-pills .nav-item .active {
+  background: #09577A !important;
+  color: #fff !important;
+}
+
+.nav-pills .nav-item:hover .nav-link {
+  background-color: #09577A !important;
+  color: #fff !important;
+}
+
+@media screen and (max-width: 520px) {
+  .save-btn {
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .add-btn {
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+/*# sourceMappingURL=add_grades.css.map */

@@ -1,7 +1,7 @@
 {% extends "manage.html" %}
 {% load custom_filters %}
 {% load static %}
-
+ 
 {% block title %} Grader {% endblock %}
 
 {% block pagetitle %} Grader {% endblock pagetitle %}
@@ -55,7 +55,7 @@ function searchNames() {
                           </h5>
                       </div>
                       <div class="col-md">
-                          <a class="card-link btn btn-outline-primary btn-block m-1" data-toggle="collapse" href="#collapse{{course.id}}">
+                          <a class="card-link btn btn-outline-primary btn-block btn-custom m-1" data-toggle="collapse" href="#collapse{{course.id}}">
                               Details
                               <i class="fa fa-toggle-down" id="toggle_course_{{course.id}}"></i>
                           </a>
@@ -68,18 +68,18 @@ function searchNames() {
                           {% if quizzes %}
                               <ul class="list-group">
                                 {% for quiz in quizzes %}
-                                  <li class="list-group-item">
+                                  <li class="list-group-item m-1">
                                     <div class="row">
                                       <div class="col-md-8">
                                         {{quiz.description}}
                                       </div>
                                       <div class="col-md-2">
-                                        <a href="{% url 'yaksh:monitor' quiz.id course.id%}" class="btn btn-outline-primary btn-block m-1">
+                                        <a href="{% url 'yaksh:monitor' quiz.id course.id%}" class="btn btn-outline-primary btn-custom btn-block m-1">
                                             Monitor
                                           </a>
                                       </div>
                                       <div class="col-md-2">
-                                        <a href="{% url 'yaksh:grade_user' quiz.id course.id%}" class="btn btn-outline-info btn-block m-1">
+                                        <a href="{% url 'yaksh:grade_user' quiz.id course.id%}" class="btn btn-outline-info btn-custom btn-block m-1">
                                           Grade
                                         </a>
                                       </div>

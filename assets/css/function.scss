@@ -1,20 +1,33 @@
-$primary-color:#12232E;
-$secondary-color:#007CC7;
-$font-color:#EEFBFB;
+$primary-color:#09577A;
+$secondary-color:#D4F0FC;
+$font-color:#fff;
 @mixin button-border {
     .btn{
         border-width: 1px!important;
     }
 }
 @mixin button-colors{
+    .btn-custom{
+        color: $primary-color!important;
+        background-color: transparent!important;
+        border-width: 1px!important;
+        border-color: $primary-color!important;
+    }
+    .btn-custom:hover{
+        color: $font-color!important;
+        background-color: $primary-color!important;
+    }
+}
+
+@mixin login-button {
     .btn{
-        color: $secondary-color;
-        border-color: $secondary-color;
+        color: $secondary-color!important;
         background-color: transparent;
         border-width: 1px!important;
+        border-color: $secondary-color!important;
     }
     .btn:hover{
-        color: $font-color;
-        background-color: $secondary-color;
+        color: $primary-color!important;
+        background-color: $secondary-color!important;
     }
 }

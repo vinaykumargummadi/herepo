@@ -1,0 +1,35 @@
+@import 'function.scss';
+@include button-border;
+center{
+    text-transform: uppercase;
+}
+@include button-colors;
+.contest-active{
+    color: $font-color!important;
+}
+.nav-pills{ 
+    .nav-item{
+        .nav-link{
+            background-color: transparent;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+        }
+    }
+    .nav-item:hover{
+        .nav-link{
+            background-color: $primary-color;
+            color: $font-color;
+        }
+    }
+    
+}
+.card{
+    .card-header{
+        background-color: transparent;
+        border: 1px solid $primary-color;
+    }
+    .card-body{
+        border-top: none!important;
+        border: 1px solid $primary-color;
+    }
+}

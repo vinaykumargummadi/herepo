@@ -3,50 +3,28 @@
 }
 
 .heading {
-  color: #12232E;
+  color: #09577A;
 }
 
-.container .addcontest-btn {
+.container .btn-custom {
+  color: #09577A !important;
+  background-color: transparent !important;
   border-width: 1px !important;
-  border-color: #007CC7;
-  color: #007CC7;
+  border-color: #09577A !important;
 }
 
-.container .addcontest-btn:hover {
-  color: #EEFBFB;
-  background-color: #007CC7;
-}
-
-.container .createcontest-btn {
-  border-width: 1px !important;
-  border-color: #007CC7;
-  color: #007CC7;
-}
-
-.container .createcontest-btn:hover {
-  color: #EEFBFB;
-  background-color: #007CC7;
+.container .btn-custom:hover {
+  color: #fff !important;
+  background-color: #09577A !important;
 }
 
 .container .accordion .card {
-  color: #007CC7;
-  border: 1px solid #12232E;
+  color: #09577A;
+  border: 1px solid #09577A;
 }
 
 .container .accordion .card .card-header {
   cursor: pointer;
   background-color: transparent;
-}
-
-.container .accordion .card .card-header .btn {
-  border-width: 1px !important;
-  border-color: #007CC7;
-  color: #007CC7;
-  background-color: transparent;
-}
-
-.container .accordion .card .card-header .btn:hover {
-  color: #EEFBFB;
-  background-color: #007CC7;
 }
 /*# sourceMappingURL=moderator_dashboard.css.map */

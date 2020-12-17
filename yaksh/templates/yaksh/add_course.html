@@ -3,7 +3,7 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'yaksh/css/jquery.datetimepicker.css' %}">
-<link rel="stylesheet" href="{% static 'css/contest.css' %}">
+<link rel="stylesheet" href="{% static 'css/courses.css' %}">
 {% endblock %}
 
 {% block script %}
@@ -17,7 +17,7 @@
     <hr>
     <div class="row">
         <div class="col-md-8">
-            <ul class="nav nav-pills" id="course_tabs">
+            <ul class="nav nav-pills d-flex justify-content-center" id="course_tabs">
                 <li class="nav-item">
                     <a class="nav-link m-1" href="{% url 'yaksh:courses' %}">
                         My Contests
@@ -51,11 +51,11 @@
         </center>
 
         <center>
-            <button class="btn btn-outline-success btn-lg m-1" type="submit" id="submit" name="course">
+            <button class="btn btn-lg btn-outline-success m-1" type="submit" id="submit" name="course">
                 <i class="fa fa-save"></i>&nbsp;
                 Save
             </button>
-            <a class="btn btn-outline-danger btn-lg m-1" name="button" href="{% url 'yaksh:courses' %}">
+            <a class="btn btn-lg btn-outline-danger m-1" name="button" href="{% url 'yaksh:courses' %}">
                 <i class="fa fa-times"></i>&nbsp;Cancel
             </a>
         </center>

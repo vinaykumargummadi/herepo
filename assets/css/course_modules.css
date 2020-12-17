@@ -1,8 +1,39 @@
-.card .card-header {
-  text-align: center !important;
+.btn-custom {
+  color: #09577A !important;
+  background-color: transparent !important;
+  border-width: 1px !important;
+  border-color: #09577A !important;
 }
 
-.card .card-header .btn {
+.btn-custom:hover {
+  color: #fff !important;
+  background-color: #09577A !important;
+}
+
+.btn {
   border-width: 1px !important;
+}
+
+.card {
+  border: 1px solid #09577A;
+}
+
+.card .card-header {
+  background: transparent;
+}
+
+.card .card-header .course-title {
+  font-weight: bold;
+  color: #09577A;
+}
+
+.card .card-body {
+  border-top: 1px solid #09577A;
+}
+
+@media screen and (max-width: 520px) {
+  .card .card-header {
+    text-align: center !important;
+  }
 }
 /*# sourceMappingURL=course_modules.css.map */

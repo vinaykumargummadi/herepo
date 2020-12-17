@@ -4,7 +4,7 @@
 
 .card {
   border: none;
-  color: #EEFBFB;
+  color: #fff;
 }
 
 .card .card-header {
@@ -13,20 +13,32 @@
 }
 
 .card .card-header h3 {
-  color: #12232E !important;
+  color: #09577A !important;
   text-transform: uppercase;
   text-align: center;
 }
 
 .card .card-body {
-  background-color: #12232E;
+  background-color: #09577A;
   border-radius: 10%;
 }
 
 .card .card-body .form-group {
   border-style: dashed;
-  border-color: #EEFBFB;
+  border-color: #fff;
   border-radius: 10%;
+}
+
+.card .card-body .form-group .btn {
+  color: #D4F0FC !important;
+  background-color: transparent;
+  border-width: 1px !important;
+  border-color: #D4F0FC !important;
+}
+
+.card .card-body .form-group .btn:hover {
+  color: #09577A !important;
+  background-color: #D4F0FC !important;
 }
 
 .card .card-body .form-group .login-btn {
@@ -38,11 +50,12 @@
 }
 
 .card .card-body .form-group .socials i {
-  color: #EEFBFB;
+  color: #fff;
   font-size: 32px;
+  border-width: 0px;
 }
 
-.card .card-body .form-group .socials i:hover {
-  color: #007CC7 !important;
+.card .card-body .form-group .divider {
+  border-color: #D4F0FC !important;
 }
 /*# sourceMappingURL=login.css.map */

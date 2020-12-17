@@ -1,8 +1,9 @@
 {
     "version": 3,
-    "mappings": "",
+    "mappings": "ACSI,AAAA,WAAW,CAAA;EACP,KAAK,EAVE,OAAO,CAUO,UAAU;EAC/B,gBAAgB,EAAE,WAAW,CAAA,UAAU;EACvC,YAAY,EAAE,GAAG,CAAA,UAAU;EAC3B,YAAY,EAbL,OAAO,CAac,UAAU;CACzC;;AACD,AAAA,WAAW,AAAA,MAAM,CAAA;EACb,KAAK,EAdD,IAAI,CAcU,UAAU;EAC5B,gBAAgB,EAjBT,OAAO,CAiBkB,UAAU;CAC7C",
     "sources": [
-        "editprofile.scss"
+        "editprofile.scss",
+        "function.scss"
     ],
     "names": [],
     "file": "editprofile.css"

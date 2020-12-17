@@ -2,12 +2,12 @@
 .base-content{
     padding-top: 100px!important;
 }
-
+ 
 .card{
     border: none;
     color: $font-color;
     .card-header{
-        background: transparent;
+        background: transparent; 
         border: none;
         h3{
             color: $primary-color!important;
@@ -23,7 +23,7 @@
             border-style: dashed;
             border-color: $font-color;
             border-radius: 10%;
-            // padding: 40px;
+            @include login-button;
             .login-btn{
                 border-width: 1px!important;
             }
@@ -34,11 +34,12 @@
                 i{
                     color: $font-color;
                     font-size: 32px;
+                    border-width: 0px;
                 }
-                i:hover{
-                    color: $secondary-color!important;       
-                }
-        }
+            }
+            .divider{
+                border-color: $secondary-color!important;
+            }
         }
     }
 }

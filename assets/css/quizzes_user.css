@@ -1,17 +1,36 @@
-#accordian .card .card-header {
-  background: transparent !important;
-  color: #12232E !important;
-  border: 1px solid #12232E;
+.btn-custom {
+  color: #09577A !important;
+  background-color: transparent !important;
+  border-width: 1px !important;
+  border-color: #09577A !important;
 }
 
-#accordian .card .card-body {
-  background: transparent !important;
-  color: #12232E !important;
-  border: 1px solid #12232E;
-  border-top: transparent !important;
+.btn-custom:hover {
+  color: #fff !important;
+  background-color: #09577A !important;
 }
 
 .btn {
   border-width: 1px !important;
+}
+
+#accordian .card .card-header {
+  background: transparent !important;
+  color: #09577A !important;
+  border: 1px solid #09577A;
+  font-weight: bold;
+}
+
+#accordian .card .card-body {
+  background: transparent !important;
+  color: #09577A !important;
+  border: 1px solid #09577A;
+  border-top: transparent !important;
+}
+
+@media screen and (max-width: 520px) {
+  #accordian .card .card-header {
+    text-align: center !important;
+  }
 }
 /*# sourceMappingURL=quizzes_user.css.map */

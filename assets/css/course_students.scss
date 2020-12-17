@@ -1,0 +1,16 @@
+@import 'function.scss';
+@include button-border;
+.card{
+    border: 1px solid $primary-color;
+    border-radius: 0px;
+    .card-header{
+        background-color: transparent!important;
+        .card-link{
+            color: $primary-color!important;
+        }
+    }
+}
+.card-body{
+    border: 1px solid $primary-color!important;
+    border-top: transparent!important;
+}

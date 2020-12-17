@@ -12,7 +12,7 @@
 {% block main %}
 <div class="container">
     <center>
-        <h2>{{title}}</h2>
+        <h2 class="title">{{title}}</h2>
     </center>
     <hr>
     <div class="row justify-content-center">
@@ -31,7 +31,7 @@
         </div>
         {% if "Search" in title %}
         <div class="col-md-4 col-6 my-md-0 my-2">
-            <a href="{% url 'yaksh:quizlist_user' %}" class="btn btn-outline-primary btn-md-block">
+            <a href="{% url 'yaksh:quizlist_user' %}" class="btn btn-md-block btn-outline-danger">
                 <i class="fa fa-times"></i>&nbsp;Clear search
             </a>
         </div>
@@ -61,10 +61,10 @@
             {% for course in courses %}
                 <div class="card">
                     <div class="card-header">
-                        <div class="row text-center">
+                        <div class="row">
                             <div class="col-md-7 col-12">{{course.data.name}}</div>
                             <div class="col-md-2 col-12">
-                                <a class="card-link btn btn-outline-info btn-block m-1" data-toggle="collapse" href="#collapse{{course.data.id}}">
+                                <a class="card-link btn btn-block btn-custom m-1" data-toggle="collapse" href="#collapse{{course.data.id}}">
                                     Details&nbsp;<i class="fa fa-toggle-down" id="toggle_course_{{course.id}}"></i>
                                 </a>
                             </div>
@@ -79,11 +79,11 @@
                                     </span>
                                 {% elif user in course.data.students.all %}
                                     {% if course.completion_percentage > 0 %}
-                                        <a class="btn btn-outline-primary btn-block m-1" href="{% url 'yaksh:course_modules' course.data.id %}" >
+                                        <a class="btn btn-block m-1 btn-custom" href="{% url 'yaksh:course_modules' course.data.id %}" >
                                             Continue
                                         </a>
                                     {% else %}
-                                        <a class="btn btn-outline-success btn-block m-1" href="{% url 'yaksh:course_modules' course.data.id %}">
+                                        <a class="btn btn-block m-1 btn-outline-success start-btn" href="{% url 'yaksh:course_modules' course.data.id %}">
                                             Start
                                         </a>
                                     {% endif %}
@@ -91,9 +91,9 @@
                                     {% if course.data.active %}
                                         {% if course.data.is_active_enrollment %}
                                             {% if course.data.is_self_enroll %}
-                                                <a class="btn btn-outline-primary m-1" href="{% url 'yaksh:self_enroll' course.data.id %}">Join</a>
+                                                <a class="btn m-1" href="{% url 'yaksh:self_enroll' course.data.id %}">Join</a>
                                             {% else %}
-                                                <a class="btn btn-outline-primary m-1" href="{% url 'yaksh:enroll_request' course.data.id %}">Join</a>
+                                                <a class="btn m-1" href="{% url 'yaksh:enroll_request' course.data.id %}">Join</a>
                                             {% endif %}
                                         {% else %}
                                             <span class="badge badge-danger badge-pill">

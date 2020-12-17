@@ -3,10 +3,14 @@
 }
 
 .header {
-  color: #12232E;
+  color: #09577A;
 }
 
 .navbar {
-  background-color: #12232E !important;
+  background-color: #09577A !important;
+}
+
+.title {
+  color: #09577A;
 }
 /*# sourceMappingURL=bombay.css.map */
