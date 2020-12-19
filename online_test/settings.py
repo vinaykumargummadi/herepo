@@ -124,6 +124,7 @@ STATIC_ROOT = 'yaksh/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'resources'),
     ]
 
 # Set this varable to <True> if smtp-server is not allowing to send email.
