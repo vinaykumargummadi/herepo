@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block title %} Login {% endblock %}
-
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
 {% block nav %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="{% url 'yaksh:index' %}">
@@ -15,13 +17,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 col-md-offset-6">
-            <div class="card border-primary">
-                <div class="card-header">
+            <div class="card p-md-0">
+                <div class="card-header p-0 m-0">
                     <h3>Log in to Your Account</h3>
                 </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <form action="" method="post">
+                <div class="card-body p-md-5">
+                    <div class="form-group m-0">
+                        <form action="" method="post" class="p-md-4 p-3 m-2">
                         {% csrf_token %}
 
                         <center>
@@ -52,25 +54,26 @@
                             </table>
                         </center>
                         <div class="row justify-content-center">
-                            <button class="btn btn-lg btn-success btn-block" type="submit" id="login-btn">
+                            <button class="btn btn-block login-btn m-1" type="submit" id="login-btn">
                                 <i class="fa fa-sign-in"></i>&nbsp;Login
                             </button>
-                            <a href="{% url 'yaksh:register' %}" class="btn btn-lg btn-primary btn-block" id="signup-btn">
-                                <i class="fa fa-user-plus"></i>&nbsp;NEW USER? SIGN UP
+                            <a href="{% url 'yaksh:register' %}" class="btn btn-block m-1 signup-btn" id="signup-btn">
+                                <i class="fa fa-user-plus"></i>&nbsp;NEW USER ? SIGN UP
                             </a>
-                            <a class="btn btn-lg btn-primary btn-block" href="{% url 'password_reset' %}" id="forgot-btn">
-                                Forgot Password?
+                            <a class="btn btn-block m-1 signup-btn" href="{% url 'password_reset' %}" id="forgot-btn">
+                                <i class="fa fa-edit"></i>&nbsp;Forgot Password ?
                             </a>
                         </div>
-                        <hr>
-                        <center><h1> OR </h1></center>
-                        Login with
-                        <a class="btn btn-social-icon btn-google" href="{% url 'social:begin' 'google-oauth2' %}">
-                            <span class="fa fa-google" style="font-size:32px;color:red" ></span>
-                        </a>
-                        <a class="btn btn-social-icon btn-facebook"  href="{% url 'social:begin' 'facebook' %}">
-                            <span class="fa fa-facebook-square" style="font-size:32px"></span>
-                        </a>
+                        <hr class="divider">
+                        <div class="socials d-flex align-items-center justify-content-center">
+                            <p class="m-0">Login with</p>
+                            <a class="mx-md-4 m-2" href="{% url 'social:begin' 'google-oauth2' %}">
+                                <i class="fa fa-google"></i>
+                            </a>
+                            <a class="mx-md-4 m-2"  href="{% url 'social:begin' 'facebook' %}">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </div>
                         </form>
                         </br>
                     </div>

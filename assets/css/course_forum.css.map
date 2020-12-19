@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,YAAY,CAAA;EACR,gBAAgB,EAAE,KAAK;EACvB,aAAa,EAAE,IAAI;CACtB;;AAED,AAAA,MAAM,CAAA;EACF,KAAK,EAAE,GAAG;EACV,UAAU,EAAE,IAAI;EAChB,aAAa,EAAE,IAAI;CACtB;;AACA,AAAA,GAAG,CAAA;EACA,gBAAgB,EAAE,OAAO;CAC3B",
+    "sources": [
+        "course_forum.scss",
+        "function.scss"
+    ],
+    "names": [],
+    "file": "course_forum.css"
+}

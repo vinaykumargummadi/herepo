@@ -22,12 +22,12 @@
     {% with data.papers.0 as paper %}
       <div class="card">
         <div class="card-header">
-          Team Details
+          Contest Details
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <p><b>Team:</b> {{ paper.course.name }}</p>
+              <p><b>Contest:</b> {{ paper.course.name }}</p>
               <p><b>Quiz:</b> {{ paper.question_paper.quiz.description }}</p>
             </div>
             <div class="col-md-6">

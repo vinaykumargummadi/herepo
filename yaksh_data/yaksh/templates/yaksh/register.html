@@ -3,7 +3,9 @@
 
 {% block title %} Register {% endblock %}
 {% block pagetitle %} Registration {% endblock %}
-
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
 {% block nav %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="{% url 'yaksh:index' %}">
@@ -14,12 +16,12 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row justify-content-center form-group">
-        <div class="col-md-4 col-md-offset-4">
-            <form action="" method="post">
-                <fieldset>
+    <div class="row justify-content-center form-group d-flex px-1">
+        <div class="col-md-5 col-12">
+            <form action="" method="post" class="form m-1 p-3">
+                <fieldset class="p-md-4 p-3">
                     {% csrf_token %}
-                    <h4> Please fill in the following details:</h4>
+                    <h5 class="sub-title"> Please fill in the following details:</h5>
                     <center>
                         {% if form.errors %}
                             {% for field in form %}
@@ -42,17 +44,17 @@
                             {% endfor %}
                         {% endif %}
                         {% for field in form %}
-                            <td>{{ field }} <small>{{ field.help_text }}</small></td>
+                            <td>{{ field }} <h6 class="help-text">{{ field.help_text }}</h6></td>
                             <br>
                         {% endfor %}
                         <br>
                         <br>
                     </center>
                     <center>
-                        <button class="btn btn-success btn-lg" type="submit">
+                        <button class="btn btn-outline-success btn-lg m-1" type="submit">
                             Register
                         </button>
-                        <a href="{% url 'yaksh:index' %}" class="btn btn-primary btn-lg">
+                        <a href="{% url 'yaksh:index' %}" class="btn btn-outline-primary btn-lg m-1">
                             Cancel
                         </a>
                     </center>

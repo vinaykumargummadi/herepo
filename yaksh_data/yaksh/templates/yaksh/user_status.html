@@ -1,7 +1,7 @@
 {% if status %}
     <strong>Student Name: {{student.get_full_name|title}}</strong>
     <br>
-    <strong>Overall Team Progress:</strong>
+    <strong>Overall Contest Progress:</strong>
     <div class="progress">
         {% if course_percentage <= 50 %}
             <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40"
