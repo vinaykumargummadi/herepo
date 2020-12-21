@@ -11,5 +11,34 @@
 
 .bg {
   background-color: #F4FAFF;
+  border: px solid black  !important;
+}
+
+#submit {
+  background-color: #09577A;
+  border-radius: 5px;
+}
+
+.card-header {
+  background-color: #09577A !important;
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px !important;
+  border-top: none !important;
+}
+
+.trash-cls {
+  color: red !important;
+}
+
+.trash-cls:hover {
+  color: red !important;
+}
+
+.comment {
+  border-radius: 10px;
+}
+
+.comment .comment-txt {
+  color: #08577A;
 }
 /*# sourceMappingURL=course_forum.css.map */
