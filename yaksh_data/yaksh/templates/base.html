@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="{% static 'yaksh/css/toastr.min.css' %}" />
   <!-- https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/bombay.css' %}" />
+  <!--Work Sans Font-->
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+
 
 
   {% block meta %}
@@ -42,6 +46,7 @@
   <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/jquery-3.3.1.min.js' %}"></script>
   <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/bootstrap.min.js' %}"></script>
   <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/wow.min.js' %}"></script>
+  <script src="https://kit.fontawesome.com/a01bd6bffe.js" crossorigin="anonymous"></script>
   <script src="{% static 'yaksh/js/plyr.js' %}"></script>
   <script type="text/javascript" src="{% static 'yaksh/js/simplemde.min.js' %}">
   </script>
@@ -102,8 +107,8 @@
   {% endblock %}
 
      <div class="base-content">
-         <div class="header">
-             <h3><center>{% block pagetitle %}{% endblock pagetitle %}</center></h3>
+         <div class="container-fluid header">
+             <h3 class="headname mx-1 mx-md-4 text-uppercase">{% block pagetitle %}{% endblock pagetitle %}</h3>
          </div>
          <h4><center>{% block subtitle %}{% endblock %}</center></h4>
          {% block content %}
@@ -116,10 +121,10 @@
           <div class="container">
               <div class="row">
                 <div class="col">
-                  Developed by Codegnan IT Solutions, Vijayawada
+                  Developed by Halo Inc
                 </div>
                 <div class="col">
-                  Contact: codegnansupport@codegnan.com
+                  Contact: support@halo.com
                 </div>
               </div>
            </div>

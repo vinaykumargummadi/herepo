@@ -5,6 +5,12 @@
 
 {% block pagetitle %} Questions {% endblock pagetitle %}
 
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/show_questions.css' %}">
+{% endblock %}
+
+
 {% block script %}
 <script type="text/javascript" src="{% static 'yaksh/js/show_question.js' %}"></script>
 <script type="text/javascript" src="{% static 'yaksh/js/jquery.tablesorter.min.js' %}"></script>
@@ -12,9 +18,9 @@
 
 {% block content %}
   <div class="container-fluid">
-    <div class="nav nav-pills" role="tablist" aria-orientation="vertical">
-      <a href="#show" id="showbar" class="nav-link active"  data-toggle="pill" role="tab" aria-controls="show" aria-selected="true"> All Questions</a>
-      <a href="#updown" id="updownbar" class="nav-link" data-toggle="pill" role="tab" aria-controls="updown" aria-selected="false" > Upload Questions</a>
+    <div class="nav nav-pills d-flex justify-content-center" role="tablist" aria-orientation="vertical">
+      <a href="#show" id="showbar" class="nav-link m-1 active"  data-toggle="pill" role="tab" aria-controls="show" aria-selected="true"> All Questions</a>
+      <a href="#updown" id="updownbar" class="nav-link m-1" data-toggle="pill" role="tab" aria-controls="updown" aria-selected="false" > Upload Questions</a>
     </div>
     <br>
     <div class="tab-content">
@@ -45,22 +51,26 @@
         <div class="card-body">
           <form action="" method="post"  enctype="multipart/form-data">
             {% csrf_token %}
-              <div class="form-group col-md-6">
-                  <a class="btn btn-info" href="{% url 'yaksh:download_yaml_template' %}">
+              <div class="form-group">
+                <div class="col-md-4">
+                  <a class="btn btn-outline-primary btn-custom btn-block m-1" href="{% url 'yaksh:download_yaml_template' %}">
                     <i class="fa fa-download"></i>&nbsp;Download Template</a>
+                </div>
                   <br><br>
                   <h4> Or </h4>
                   <br>
-                  <div class="input-group mb-3">
-                      <div class="custom-file">
-                          {{ upload_form }}
-                          <label class="custom-file-label" for="id_file">
-                              Choose file
-                          </label>
-                      </div>
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit" name="upload" value="upload"><i class="fa fa-upload"></i>&nbsp;Upload File</button>
-                      </div>
+                  <div class="col-md-5">
+                    <div class="input-group row">
+                        <div class="custom-file col-12">
+                            {{ upload_form }}
+                            <label class="custom-file-label" for="id_file">
+                                Choose file
+                            </label>
+                        </div>
+                        <div class="input-group-append col-12 my-4">
+                          <button class="btn btn-outline-primary  btn-custom btn-block" type="submit" name="upload" value="upload"><i class="fa fa-upload"></i>&nbsp;Upload File</button>
+                        </div>
+                    </div>
                   </div>
               </div>
               <script>
@@ -94,12 +104,12 @@
             <form method="GET" action="{% url 'yaksh:questions_filter' %}">
 
               <div class="row">
-                  <div class="col-md-4">{{ form.question_type }}</div>
-                  <div class="col-md-4">{{ form.language }}</div>
-                  <div class="col-md-4">{{ form.marks }}</div>
+                  <div class="col-md-4 my-1 my-md-0">{{ form.question_type }}</div>
+                  <div class="col-md-4 my-1 my-md-0">{{ form.language }}</div>
+                  <div class="col-md-4 my-1 my-md-0">{{ form.marks }}</div>
                   <br><br>
                   <div class="col">
-                    <button class="btn btn-outline-success">
+                    <button class="btn btn-outline-success btn-custom m-1">
                       <i class="fa fa-filter"></i>&nbsp;Filter
                     </button>
                   </div>
@@ -110,19 +120,19 @@
             <!-- Search by Tags -->
             <h4 >Search using Tags: </h4>
             <div class="row">
-              <div class="col">
+              <div class="col-11 my-1 col-md-6">
                 <form method="GET" action="{% url 'yaksh:search_questions_by_tags' %}">
                   <div class="input-group">
                     <input type="text" name="question_tags" id="question_tags" class="form-control" type="search"  placeholder="Search questions using comma separated Tags">
                     <span class="input-group-append">
-                      <button class="btn btn-outline-success" type="submit">
+                      <button class="btn btn-outline-success btn-custom" type="submit">
                         <i class="fa fa-search"></i>&nbsp;Search
                       </button>
                     </span>
                   </div>
                 </form>
               </div>
-              <div class="col">
+              <div class="col-12 my-1 col-md-6">
                 <select class="form-control" id="sel1" onchange="append_tag(this);">
                   {% if all_tags %}
                    <option value="" disabled selected>Available Tags</option>
@@ -139,7 +149,7 @@
             </div>
             <br>
             <!-- End Search by Tags -->
-            <a class="btn btn-outline-danger" href="{% url 'yaksh:show_questions' %}">
+            <a class="btn btn-outline-danger m-1" href="{% url 'yaksh:show_questions' %}">
               <i class="fa fa-times"></i>&nbsp;Clear
             </a>
           </div>
@@ -150,7 +160,7 @@
           {% csrf_token %}
           <div id="filtered-questions">
             <br>
-            <a class="btn btn-lg btn-success" href="{% url 'yaksh:add_question' %}">
+            <a class="btn btn-lg btn-custom" href="{% url 'yaksh:add_question' %}">
               <i class="fa fa-plus-circle"></i>&nbsp;Add Question</a>
             {% if objects %}
               <div>
