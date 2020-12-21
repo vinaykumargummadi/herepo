@@ -14,3 +14,32 @@
     border: 1px solid $primary-color!important;
     border-top: transparent!important;
 }
+
+// styles for upload user
+
+.card-body{
+    background-color: #F4FAFF;
+     p {
+         color: $primary-color;
+     }
+     #submit{
+         background-color: $primary-color;
+         border-radius: 10px;
+     }
+}
+
+#enroll{
+    border-radius: 10px;
+}
+
+.table{
+    border-radius: 20px !important;
+}
+
+#reject{
+    border-radius: 10px;
+}
+
+.card{
+    border-radius: 10px;
+}

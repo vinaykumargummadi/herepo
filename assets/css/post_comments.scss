@@ -1,15 +1,8 @@
 @import 'function.scss';
 
-#posts_table{
-    background-color: white;
-    border-radius: 20px;
-}
 
-.clear{
-    color: red;
-    background: none;
-    border-radius: 20px;
-}
+
+
  .bg{
     background-color: #F4FAFF;
     border:px solid black  !important;
@@ -53,5 +46,9 @@
     .comment-txt{
         color: #08577A;
     }
+ }
+
+ .bg{
+     border: 1px solid $primary-color !important;
  }
 
