@@ -10,19 +10,19 @@
   background-color: #09577A !important;
 }
 
-.nav-item .nav-link {
+.list-group .nav-item .nav-link {
   color: #09577A;
   background-color: transparent;
   border-width: 1px !important;
   border-color: #09577A;
 }
 
-.nav-item .nav-link:hover {
+.list-group .nav-item .nav-link:hover {
   color: #fff;
   background-color: #09577A;
 }
 
-.nav-item .active {
+.list-group .nav-item .active {
   color: #fff !important;
   background-color: #09577A !important;
 }

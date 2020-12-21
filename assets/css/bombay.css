@@ -6,8 +6,25 @@
   color: #09577A;
 }
 
-.navbar {
-  background-color: #09577A !important;
+#manageNavbar {
+  background-color: white !important;
+}
+
+#manageNavbar .navbar-brand {
+  color: #24577A !important;
+}
+
+#manageNavbar .nav-link {
+  color: #24577A !important;
+}
+
+#manageNavbar .fa-chevron-circle-down {
+  font-size: 14px;
+}
+
+#manageNavbar .navbar {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 .title {
