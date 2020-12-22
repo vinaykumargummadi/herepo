@@ -6,8 +6,20 @@
 .header{
     color: $primary-color;
 }
-.navbar{
-    background-color:$primary-color!important;
+#manageNavbar{
+    background-color:white !important;
+    .navbar-brand{
+        color: #24577A !important;
+    }
+    .nav-link{
+        color: #24577A !important;
+    }
+    .fa-chevron-circle-down{
+        font-size: 14px;
+    }
+    .navbar{
+        box-shadow: none !important;
+    }
 }
 .title{
     color: $primary-color;
