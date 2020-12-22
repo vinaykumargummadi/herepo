@@ -1,0 +1,57 @@
+@import 'function.scss';
+
+#posts_table{
+    background-color: white;
+    border-radius: 20px;
+}
+
+.clear{
+    color: red;
+    background: none;
+    border-radius: 20px;
+}
+ .bg{
+    background-color: #F4FAFF;
+    border:px solid black  !important;
+ }
+
+ #submit{
+     background-color: $primary-color;
+     border-radius: 5px;
+ }
+
+
+.card-header{
+
+        background-color: $primary-color !important;
+        border-top-left-radius: 20px !important; 
+        border-top-right-radius: 20px !important;
+        border-top: none !important;
+    }
+ 
+// .myborder{
+//     .card{
+//         border:0px !important;
+//     }
+// }
+
+
+ .trash-cls{
+     color: red !important;   
+ }
+ .trash-cls:hover{
+     color: red !important;   
+ }
+
+
+ .comment{
+     border-radius: 10px;
+    
+ }
+
+ .comment{
+    .comment-txt{
+        color: #08577A;
+    }
+ }
+

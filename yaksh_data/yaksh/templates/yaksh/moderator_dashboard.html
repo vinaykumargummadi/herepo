@@ -1,26 +1,30 @@
 {% extends "manage.html" %}
 {% load custom_filters %}
+{% load static %}
 
 {% block title %} My Dashboard{% endblock %}
-{% block pagetitle %} <h2>My Dashboard</h2> {% endblock %}
-
+{% block pagetitle %} <h1 class="heading">My Dashboard</h1> {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/moderator_dashboard.css' %}">
+{% endblock %}
 {% block content %}
 <div class="container">
     <center>
-        <h4>
+        <h6 class="text-secondary">
             List of quizzes! Click on the given links to have a look at answer papers for a quiz
-            lore
-        </h4>
+        </h6>
     </center>
     <hr>
     <center>
-        <a href="{% url 'yaksh:add_course' %}" class="btn btn-success btn-lg btn-custom">
-            <span class=" fa fa-plus-circle"></span>&nbsp;Add Team
+        <a href="{% url 'yaksh:add_course' %}" class="btn addcontest-btn m-1 btn-custom">
+            <span class=" fa fa-plus-circle"></span>&nbsp;
+            Add Contest
         </a>
-        <a href="{% url 'yaksh:create_demo_course' %}" class="btn btn-primary btn-custom btn-lg">
-            Create Demo Team
+        <a href="{% url 'yaksh:create_demo_course' %}" class="btn createcontest-btn btn-custom">
+            <span class=" fa fa-plus-circle"></span>&nbsp;
+            Create Demo Contest
         </a>
-        <br><br>
+        <br><br> 
         {% if messages %}
             {% for message in messages %}
             <div class="alert alert-dismissible alert-{{ message.tags }}">
@@ -36,19 +40,19 @@
     <br>
     {% if not courses %}
         <div class="alert alert-info">
-          No Teams found. Add a new team or Create demo course
+          No Contests found. Add a new contest or Create demo course
         </div>
     {% else %}
         {% include "yaksh/paginator.html" %}
-        <br>
+        <br> 
         <div id="accordion" class="accordion">
             {% for course in courses %}
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
+                        <div class="row text-center">
                             <div class="col-md-4">
                                 <h4 data-toggle="tooltip" title="{{course.name}}">
-                                    {{ course.name | truncatechars:40 }} 
+                                    {{ course.name | truncatechars:40 }}
                                 </h4>
                             </div>
                             <div class="col-md-2">
@@ -62,16 +66,16 @@
                                     </span>
                                 {% endif %}
                             </div>
-                            <div class="col-md-3">
-                                <a href="{% url 'yaksh:course_detail' course.id %}" class="btn-custom">
+                            <div class="col-md-3 my-2">
+                                <a href="{% url 'yaksh:course_detail' course.id %}" class="btn btn-custom">
                                     <i class="fa fa-tasks"></i>
-                                    Manage Team
+                                    Manage Contest
                                 </a>
                             </div>
-                            <div class="col-md">
-                                <a class="card-link btn btn-info btn-custom" data-toggle="collapse" href="#collapse{{course.id}}">
-                                    Details
+                            <div class="col-md my-2">
+                                <a class="card-link btn  btn-custom" data-toggle="collapse" href="#collapse{{course.id}}">
                                     <i class="fa fa-toggle-down" id="toggle_course_{{course.id}}"></i>
+                                    Details
                                 </a>
                             </div>
                         </div>

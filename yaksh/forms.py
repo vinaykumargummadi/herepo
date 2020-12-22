@@ -427,22 +427,22 @@ class CourseForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(CourseForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course Name'}
+            {'class': form_input_class, 'placeholder': 'Contest Name'}
         )
         self.fields['enrollment'].widget.attrs.update(
             {'class': 'custom-select'}
         )
         self.fields['code'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course Code'}
+            {'class': form_input_class, 'placeholder': 'Contest Code'}
         )
         self.fields['instructions'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course instructions'}
+            {'class': form_input_class, 'placeholder': 'Contest instructions'}
         )
         self.fields['start_enroll_time'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course Start DateTime'}
+            {'class': form_input_class, 'placeholder': 'Contest Start DateTime'}
         )
         self.fields['end_enroll_time'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course End DateTime'}
+            {'class': form_input_class, 'placeholder': 'Contest End DateTime'}
         )
         self.fields['grading_system'].widget.attrs.update(
             {'class': 'custom-select'}

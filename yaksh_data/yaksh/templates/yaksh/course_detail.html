@@ -1,7 +1,7 @@
 {% extends "manage.html" %}
 {% load static %}
 {% load custom_filters %}
-{% block title %} Team Details {% endblock title %}
+{% block title %} Contest Details {% endblock title %}
 
 {% block script %}
 <script type="text/javascript" src="{% static 'yaksh/js/course.js' %}"></script>
@@ -12,6 +12,7 @@
 {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'yaksh/css/jquery-ui/jquery-ui.css' %}">
+<link rel="stylesheet" href="{% static 'css/course_detail.css' %}">
 {% endblock %}
 
 <div class="text-center">
@@ -56,8 +57,8 @@
                     {% include "yaksh/course_teachers.html" %}
                 {% else %}
                     <div class="jumbotron">
-                        <h1 class="display-4">Manage Team</h1>
-                        <hr class="my-4">
+                        <h1 class="display-4">Manage Contest</h1>
+                        <hr class="my-4 divider">
                         <p>
                             <ul>
                                 <li>
@@ -70,7 +71,7 @@
                                     Send mail to the Members
                                 </li>
                                 <li>
-                                    View Members team progress
+                                    View Members contest progress
                                 </li>
                                 <li>
                                     Add and View Mentors
@@ -78,7 +79,7 @@
                             </ul>
                         </p>
                         <p class="lead">
-                            <a class="btn btn-primary btn-lg" href="https://yaksh.readthedocs.io/en/latest/moderator_docs/creating_course.html" role="button" target="blank">
+                            <a class="btn btn-primary btn-lg btn-custom" href="https://yaksh.readthedocs.io/en/latest/moderator_docs/creating_course.html" role="button" target="blank">
                                 <i class="fa fa-info-circle"></i>
                                 Learn more
                             </a>
