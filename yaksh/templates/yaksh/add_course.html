@@ -13,15 +13,15 @@
 <script type="text/javascript" src="{% static 'yaksh/js/jquery.datetimepicker.full.min.js' %}"></script>
 {% endblock %}
 {% block title %} Add Contest {% endblock %}
+{% block pagetitle %} Add Contest {% endblock pagetitle %}
 
 {% block content %}
 <section id="content-section">
     <div class="container-fluid">
-        <div class="content-bg pb-5 mt-1">
-            <h1 id="page_title" class="text-white p-3"> ADD CONTENT</h1>
+        <div class="pb-5 mt-1 content-bg">
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mt-5">
                         <ul class="nav nav-pills" id="course_tabs">
                             <li class="nav-item">
                                 <a class="nav-link m-1" href="{% url 'yaksh:courses' %}">

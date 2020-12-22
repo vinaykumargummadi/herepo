@@ -100,26 +100,15 @@
         </div>
     </div>
 
-     <div class="base-content">
-         <div class="container-fluid header">
-             <h3 class="headname mx-1 mx-md-4 text-uppercase">{% block pagetitle %}{% endblock pagetitle %}</h3>
-         </div>
-         <h4><center>{% block subtitle %}{% endblock %}</center></h4>
-         {% block content %}
-         {% endblock %}
-     </div>
-     
+    {% block nav %} {% endblock %}
 
     <div class="base-content">
-        <div class="header">
-            <h3>
-                <center>{% block pagetitle %}{% endblock pagetitle %}</center>
-            </h3>
+        <div class="container-fluid header">
+            <h3 class="headname mx-1 mx-md-4 text-uppercase">{% block pagetitle %}{% endblock pagetitle %}</h3>
         </div>
-        <h4>
-            <center>{% block subtitle %}{% endblock %}</center>
-        </h4>
-        {% block content %} {% endblock %}
+        <h4><center>{% block subtitle %}{% endblock %}</center></h4>
+        {% block content %}
+        {% endblock %}
     </div>
 
 
@@ -131,7 +120,7 @@
                     Developed by Halo Inc
                 </div>
                 <div class="col">
-                    Contact: hola@halo.com
+                    Contact: support@halo.com
                 </div>
             </div>
         </div>
