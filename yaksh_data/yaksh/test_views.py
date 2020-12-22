@@ -1641,7 +1641,7 @@ class TestAddTeacher(TestCase):
 
     def test_add_teacher_get(self):
         """
-        GET request to add teacher should display list of teachers
+        GET request to add mentor should display list of mentors
         """
         self.client.login(
             username=self.user.username,
@@ -1658,7 +1658,7 @@ class TestAddTeacher(TestCase):
 
     def test_add_teacher_post(self):
         """
-        POST request to add teacher should add teachers to a course
+        POST request to add mentor should add mentors to a course
         """
         self.client.login(
             username=self.user.username,
@@ -1669,10 +1669,10 @@ class TestAddTeacher(TestCase):
 
         for i in range(5):
             teacher = User.objects.create_user(
-                username='demo_teacher{}'.format(i),
-                password='demo_teacher_pass{}'.format(i),
-                first_name='teacher_first_name{}'.format(i),
-                last_name='teacher_last_name{}'.format(i),
+                username='demo_mentor{}'.format(i),
+                password='demo_mentor_pass{}'.format(i),
+                first_name='mentor_first_name{}'.format(i),
+                last_name='mentor_last_name{}'.format(i),
                 email='demo{}@test.com'.format(i)
             )
 
@@ -1681,7 +1681,7 @@ class TestAddTeacher(TestCase):
                 roll_number='T{}'.format(i),
                 institute='IIT',
                 department='Chemical',
-                position='Teacher',
+                position='Mentor',
                 timezone='UTC'
             )
             teacher_id_list.append(teacher.id)
@@ -1698,7 +1698,7 @@ class TestAddTeacher(TestCase):
         self.assertEqual(response.context['status'], True)
         for t_id in teacher_id_list:
             teacher_object = User.objects.get(id=t_id)
-            self.assertIn(teacher_object, response.context['teachers_added'])
+            self.assertIn(teacher_object, response.context['mentors_added'])
             self.assertIn(teacher_object, self.course.teachers.all())
 
 
@@ -1818,11 +1818,11 @@ class TestRemoveTeacher(TestCase):
 
         for i in range(5):
             teacher = User.objects.create_user(
-                username='remove_teacher{}'.format(i),
-                password='remove_teacher_pass{}'.format(i),
-                first_name='remove_teacher_first_name{}'.format(i),
-                last_name='remove_teacher_last_name{}'.format(i),
-                email='remove_teacher{}@test.com'.format(i)
+                username='remove_mentor{}'.format(i),
+                password='remove_mentor_pass{}'.format(i),
+                first_name='remove_mentor_first_name{}'.format(i),
+                last_name='remove_mentor_last_name{}'.format(i),
+                email='remove_mentor{}@test.com'.format(i)
             )
 
             Profile.objects.create(
@@ -1830,7 +1830,7 @@ class TestRemoveTeacher(TestCase):
                 roll_number='RT{}'.format(i),
                 institute='IIT',
                 department='Aeronautical',
-                position='Teacher',
+                position='Mentor',
                 timezone='UTC'
             )
             teacher_id_list.append(teacher.id)
@@ -1910,13 +1910,13 @@ class TestCourses(TestCase):
             timezone='UTC'
         )
 
-        self.teacher_plaintext_pass = 'teacher'
+        self.teacher_plaintext_pass = 'mentor'
         self.teacher = User.objects.create_user(
-            username='teacher',
+            username='mentor',
             password=self.teacher_plaintext_pass,
-            first_name='teacher_first_name',
-            last_name='teacher_last_name',
-            email='demo_teacher@test.com'
+            first_name='mentor_first_name',
+            last_name='mentor_last_name',
+            email='demo_mentor@test.com'
         )
 
         Profile.objects.create(
@@ -2411,9 +2411,9 @@ class TestAddCourse(TestCase):
         )
 
         # Create a teacher
-        self.teacher_plaintext_pass = 'demo_teacher'
+        self.teacher_plaintext_pass = 'demo_mentor'
         self.teacher = User.objects.create_user(
-            username='demo_teacher',
+            username='demo_mentor',
             password=self.teacher_plaintext_pass,
             first_name='first_name',
             last_name='last_name',
@@ -2549,7 +2549,7 @@ class TestAddCourse(TestCase):
         response = self.client.post(
             reverse('yaksh:edit_course',
                     kwargs={"course_id": self.course.id}),
-            data={'name': 'Teacher_course',
+            data={'name': 'mentor_course',
                   'active': True,
                   'enrollment': 'open',
                   'start_enroll_time': '2016-01-10 09:00:15',
@@ -2557,7 +2557,7 @@ class TestAddCourse(TestCase):
                   }
         )
         updated_course = Course.objects.get(id=self.course.id)
-        self.assertEqual(updated_course.name, 'Teacher_course')
+        self.assertEqual(updated_course.name, 'Mentorr_course')
         self.assertEqual(updated_course.enrollment, 'open')
         self.assertEqual(updated_course.active, True)
         self.assertEqual(response.status_code, 302)
@@ -2574,11 +2574,11 @@ class TestUploadMarks(TestCase):
 
         # Create Moderator with profile
         self.teacher = User.objects.create_user(
-            username='teacher',
-            password='teacher',
-            first_name='teacher',
-            last_name='teaacher',
-            email='teacher@test.com'
+            username='mentor',
+            password='mentor',
+            first_name='mentor',
+            last_name='meentor',
+            email='mentor@test.com'
         )
 
         Profile.objects.create(
@@ -2709,7 +2709,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH,
                                      "marks_not_attempted_question.csv")
@@ -2737,7 +2737,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH,
                                      "marks_invalid_question_id.csv")
@@ -2759,7 +2759,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH,
                                      "marks_invalid_user.csv")
@@ -2781,7 +2781,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH,
                                      "marks_invalid_data.csv")
@@ -2803,7 +2803,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH,
                                      "marks_header_missing.csv")
@@ -2829,7 +2829,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH,
                                      "marks_header_modified.csv")
@@ -2856,7 +2856,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH,
                                      "marks_single_question.csv")
@@ -2884,7 +2884,7 @@ class TestUploadMarks(TestCase):
         # Given
         self.client.login(
             username=self.teacher.username,
-            password='teacher'
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH, "marks_correct.csv")
         csv_file = open(csv_file_path, 'rb')
@@ -2910,8 +2910,8 @@ class TestUploadMarks(TestCase):
     def test_upload_users_with_wrong_csv(self):
         # Given
         self.client.login(
-            username='teacher',
-            password='teacher'
+            username='mentor',
+            password='mentor'
         )
         csv_file_path = os.path.join(FIXTURES_DIR_PATH, "demo_questions.zip")
         csv_file = open(csv_file_path, 'rb')
@@ -3762,8 +3762,8 @@ class TestCourseDetail(TestCase):
                                    kwargs={'course_id': self.user1_course.id,
                                            'student_id': self.student.id}))
         err_msg = response.json()['user_data'].strip()
-        actual_err = ('You are neither course creator '
-                      'nor course teacher for {0}'.format(
+        actual_err = ('You are neither contest creator '
+                      'nor contest mentor for {0}'.format(
                         self.user1_course.name)
                       )
         self.assertEqual(response.status_code, 200)
@@ -5726,9 +5726,9 @@ class TestQuestionPaper(TestCase):
             timezone='UTC'
         )
 
-        self.teacher_plaintext_pass = 'demo_teacher'
+        self.teacher_plaintext_pass = 'demo_mentor'
         self.teacher = User.objects.create_user(
-            username='demo_teacher',
+            username='demo_mentor',
             password=self.teacher_plaintext_pass,
             first_name='first_name',
             last_name='last_name',
@@ -6469,13 +6469,13 @@ class TestLearningModule(TestCase):
         )
 
         # Create a teacher to add to the course
-        self.teacher_plaintext_pass = 'demo_teacher'
+        self.teacher_plaintext_pass = 'demo_mentor'
         self.teacher = User.objects.create_user(
-            username='demo_teacher',
+            username='demo_mentor',
             password=self.teacher_plaintext_pass,
             first_name='first_name',
             last_name='last_name',
-            email='demo@teacher.com',
+            email='demo@mentor.com',
         )
 
         Profile.objects.create(
@@ -6623,13 +6623,13 @@ class TestLearningModule(TestCase):
             reverse('yaksh:edit_module',
                     kwargs={"module_id": self.learning_module.id,
                             "course_id": self.course.id}),
-            data={"name": "teacher module 2",
-                  "description": "teacher module 2",
+            data={"name": "mentor module 2",
+                  "description": "mentor module 2",
                   "Save": "Save"})
 
         self.assertEqual(response.status_code, 200)
-        learning_module = LearningModule.objects.get(name="teacher module 2")
-        self.assertEqual(learning_module.description, "teacher module 2")
+        learning_module = LearningModule.objects.get(name="mentor module 2")
+        self.assertEqual(learning_module.description, "mentor module 2")
         self.assertEqual(learning_module.creator, self.user)
 
     def test_teacher_can_design_module(self):
@@ -6857,9 +6857,9 @@ class TestLessons(TestCase):
         )
 
         # Create a teacher to add to the course
-        self.teacher_plaintext_pass = 'demo_teacher'
+        self.teacher_plaintext_pass = 'demo_mentor'
         self.teacher = User.objects.create_user(
-            username='demo_teacher',
+            username='demo_mentor',
             password=self.teacher_plaintext_pass,
             first_name='first_name',
             last_name='last_name',
