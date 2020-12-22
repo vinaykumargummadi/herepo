@@ -46,6 +46,7 @@
   <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/jquery-3.3.1.min.js' %}"></script>
   <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/bootstrap.min.js' %}"></script>
   <script language="JavaScript" type="text/javascript" src="{% static 'yaksh/js/wow.min.js' %}"></script>
+  <script src="https://kit.fontawesome.com/a01bd6bffe.js" crossorigin="anonymous"></script>
   <script src="{% static 'yaksh/js/plyr.js' %}"></script>
   <script type="text/javascript" src="{% static 'yaksh/js/simplemde.min.js' %}">
   </script>
@@ -106,8 +107,8 @@
   {% endblock %}
 
      <div class="base-content">
-         <div class="header">
-             <h3><center>{% block pagetitle %}{% endblock pagetitle %}</center></h3>
+         <div class="container-fluid header">
+             <h3 class="headname mx-1 mx-md-4 text-uppercase">{% block pagetitle %}{% endblock pagetitle %}</h3>
          </div>
          <h4><center>{% block subtitle %}{% endblock %}</center></h4>
          {% block content %}
