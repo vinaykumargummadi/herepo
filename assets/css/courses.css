@@ -185,11 +185,6 @@ center {
   border: 1px solid #59748A;
 }
 
-.totalmarks {
-  color: #09577A !important;
-  font-size: 20px !important;
-}
-
 .searchname {
   color: #09577A !important;
 }
@@ -204,37 +199,6 @@ center {
 
 .selectname {
   color: #09577A !important;
-}
-
-.myaddbtn {
-  background-color: #206E04 !important;
-  color: white !important;
-  font-size: 16px !important;
-  border-radius: 10px !important;
-  -webkit-box-shadow: 0px 0px 30px #0000001A;
-          box-shadow: 0px 0px 30px #0000001A;
-}
-
-.myremovebtn {
-  background-color: #DD3232 !important;
-  color: white !important;
-  font-size: 16px !important;
-  border-radius: 10px !important;
-  -webkit-box-shadow: 0px 0px 30px #0000001A;
-          box-shadow: 0px 0px 30px #0000001A;
-}
-
-.mynextbtn {
-  background-color: #09577A !important;
-  color: white !important;
-  font-size: 16px !important;
-  border-radius: 10px !important;
-  -webkit-box-shadow: 0px 0px 30px #0000001A;
-          box-shadow: 0px 0px 30px #0000001A;
-}
-
-.inputs-list li {
-  list-style-type: none;
 }
 
 .shufflename {
@@ -274,19 +238,6 @@ center {
 
 .card {
   border: 0;
-}
-
-.instname {
-  color: #85A5C2 !important;
-  font-size: 16px !important;
-}
-
-.instructions {
-  border: 1px solid black !important;
-}
-
-.time {
-  font-size: 16px !important;
 }
 
 @media only screen and (max-width: 768px) {

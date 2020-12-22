@@ -5,7 +5,7 @@
 {% block pagetitle %}All Contests {% endblock pagetitle %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/quizzes_user.css'%}">
-<link rel="stylesheet" href="{% static 'css/courses.css' %}">
+
 {% endblock %}
 {% block script %}
 
@@ -21,7 +21,7 @@
                 {% csrf_token %}
                 <div class="col-md-12 my-5">
                     <div class="input-group">
-                        <input type="text" name="course_code" class="form-control" type="search"  placeholder="Enter contest code to search" required="">
+                        <input type="text" name="course_code" class="form-control quizsearch" type="search"  placeholder="Enter contest code to search" required="">
                         <span class="input-group-append">
                             <button class="btn" type="submit">
                                 <i class="fa fa-search fa-2x"></i>
@@ -68,8 +68,8 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-7 col-12">{{course.data.name}}</div>
-                            <div class="col-md-2 col-12">
-                                <a class="card-link detailsbtn" data-toggle="collapse" href="#collapse{{course.data.id}}">
+                            <div class="col-md-2 col-12 detailsbtn">
+                                <a class="card-link" data-toggle="collapse" href="#collapse{{course.data.id}}">
                                     Details&nbsp;<i class="fa fa-angle-down" id="toggle_course_{{course.id}}"></i>
                                    
                                 </a>
@@ -85,8 +85,9 @@
                                     </span>
                                 {% elif user in course.data.students.all %}
                                     {% if course.completion_percentage > 0 %}
-                                        <a class="continuebtn" href="{% url 'yaksh:course_modules' course.data.id %}" >
-                                            Continue <i class="fas fa-angle-right"></i>
+                                    <span class="continuebtn">
+                                        <a  href="{% url 'yaksh:course_modules' course.data.id %}" >
+                                            Continue <i class="fas fa-angle-right"></i></span>
                                         </a>
                                     {% else %}
                                         <a class="btn btn-block m-1 btn-outline-success start-btn" href="{% url 'yaksh:course_modules' course.data.id %}">
@@ -141,13 +142,13 @@
                                    
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="row">
                                 <div class="col-md-3">
                                     {% with course.data.get_learning_modules as modules %}
                                     {% if modules %}
                                         <p> <span class="">
                                             Contest Content</span>
-                                            <ul>
+                                            <ul class="mylist">
                                                 {% for module in modules %}
                                                     <li>{{module.name|title}}</li>
                                                 {% endfor %}
