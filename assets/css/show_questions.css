@@ -19,7 +19,7 @@
 }
 
 .base-content {
-  margin: 50px 50px;
+  margin: 20px 50px;
 }
 
 .base-content .header {
@@ -145,5 +145,11 @@
     font-size: 0.7em;
     word-break: break-all;
   }
+}
+
+.headname {
+  padding: 0px !important;
+  position: relative;
+  top: 0 !important;
 }
 /*# sourceMappingURL=show_questions.css.map */
