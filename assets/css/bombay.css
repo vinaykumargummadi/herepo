@@ -30,4 +30,14 @@
 .title {
   color: #09577A;
 }
+
+.headname {
+  color: white !important;
+  background-color: #09577A;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
 /*# sourceMappingURL=bombay.css.map */

@@ -30,11 +30,10 @@
 }
 
 .base-content h4 {
-  display: none;
+  display: inline;
 }
 
 .base-content .container-fluid {
-  background-color: #F4FAFF;
   border-bottom: 1px solid #09577A;
   border-left: 1px solid #09577A;
   border-right: 1px solid #09577A;
