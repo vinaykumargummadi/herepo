@@ -87,12 +87,13 @@
                                     {% if course.completion_percentage > 0 %}
                                     <span class="continuebtn">
                                         <a  href="{% url 'yaksh:course_modules' course.data.id %}" >
-                                            Continue <i class="fas fa-angle-right"></i></span>
+                                            Continue <i class="fas fa-angle-right"></i>
                                         </a>
                                     {% else %}
-                                        <a class="btn btn-block m-1 btn-outline-success start-btn" href="{% url 'yaksh:course_modules' course.data.id %}">
+                                    <span class="continuebtn">
+                                        <a  href="{% url 'yaksh:course_modules' course.data.id %}">
                                             Start
-                                        </a>
+                                        </a></span>
                                     {% endif %}
                                 {% else %}
                                     {% if course.data.active %}
