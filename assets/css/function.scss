@@ -1,6 +1,9 @@
 $primary-color:#09577A;
 $secondary-color:#D4F0FC;
+$backdrop-color:#F4FAFF;
 $font-color:#fff;
+$inactive-color:#85A5C2;
+$shadow-color:#0000001A;
 @mixin button-border {
     .btn{
         border-width: 1px!important;
@@ -14,7 +17,7 @@ $font-color:#fff;
         border-color: $primary-color!important;
     }
     .btn-custom:hover{
-        color: $font-color!important;
+        color: $secondary-color!important;
         background-color: $primary-color!important;
     }
 }
