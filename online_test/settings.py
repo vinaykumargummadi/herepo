@@ -51,8 +51,11 @@ INSTALLED_APPS = (
     'rest_framework',
     'api',
     'corsheaders',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'crispy_forms',
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -124,6 +127,7 @@ STATIC_ROOT = 'yaksh/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets'),
+    os.path.join(BASE_DIR, 'resources'),
     ]
 
 # Set this varable to <True> if smtp-server is not allowing to send email.

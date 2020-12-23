@@ -14,7 +14,7 @@ center {
 }
 
 .btn-custom:hover {
-  color: #fff !important;
+  color: #D4F0FC !important;
   background-color: #09577A !important;
 }
 
@@ -250,12 +250,21 @@ center {
 }
 
 .avilname {
+<<<<<<< HEAD
   color: #09577A !important;
   font-weight: 500;
 }
 
 .thname {
   color: #7B8C92 !important;
+=======
+  font-size: 10px !important;
+  color: red !important;
+}
+
+.thname {
+  font-size: 20px !important;
+>>>>>>> 00bb87f70d3a0b24ba443e5173128761ee0f9a84
   font-weight: 400 !important;
 }
 

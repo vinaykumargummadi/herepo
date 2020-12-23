@@ -6,9 +6,31 @@
 .header{
     color: $primary-color;
 }
-.navbar{
-    background-color:$primary-color!important;
+#manageNavbar{
+    background-color:white !important;
+    .navbar-brand{
+        color: #24577A !important;
+    }
+    .nav-link{
+        color: #24577A !important;
+    }
+    .fa-chevron-circle-down{
+        font-size: 14px;
+    }
+    .navbar{
+        box-shadow: none !important;
+    }
 }
 .title{
     color: $primary-color;
+}
+
+.headname{
+    color:white !important;
+    background-color: $primary-color;
+    padding: 20px;
+    position: relative;
+    top:20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }

@@ -1,7 +1,6 @@
-
 {% extends "user.html" %}
 {% load custom_filters %}
-{% load static %}  
+{% load static %}
 {% block title %} Contest Modules {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/course_modules.css' %}">
@@ -34,37 +33,37 @@
                 
             {% endif %}
             {% if msg %}
-                <div class="alert alert-dismissible alert-warning">
-                    <button type="button" class="close" data-dismiss="alert">
-                        <i class="fa fa-close"></i>
-                    </button>
-                    <strong>{{ msg }}</strong>
-                </div>
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">
+                    <i class="fa fa-close"></i>
+                </button>
+                <strong>{{ msg }}</strong>
+            </div>
             {% endif %}
             {% if modules %}
             <strong>- Overall Contest Progress:</strong>
             <div class="progress mt-4 myprogress">
                 {% if course_percentage %}
-                    {% if course_percentage <= 50 %}
-                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{course_percentage}}"
-                        aria-valuemin="0" aria-valuemax="100" style="width:{{course_percentage}}%">
-                    {% elif course_percentage <= 75 %}
-                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{course_percentage}}"
-                        aria-valuemin="0" aria-valuemax="100" style="width:{{course_percentage}}%">
-                    {% else %}
+                {% if course_percentage <= 50 %} <div class="progress-bar bg-danger" role="progressbar"
+                    aria-valuenow="{{course_percentage}}" aria-valuemin="0" aria-valuemax="100"
+                    style="width:{{course_percentage}}%">
+                    {% elif course_percentage <= 75 %} <div class="progress-bar bg-warning" role="progressbar"
+                        aria-valuenow="{{course_percentage}}" aria-valuemin="0" aria-valuemax="100"
+                        style="width:{{course_percentage}}%">
+                        {% else %}
                         <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{course_percentage}}"
-                        aria-valuemin="0" aria-valuemax="100" style="width:{{course_percentage}}%">
-                    {% endif %}
-                    <b style="color: white;">{{course_percentage}}% Completed</b>
-                    </div>
-                {% else %}
-                    <b style="color: black;">0% Completed</b>
-                {% endif %}
+                            aria-valuemin="0" aria-valuemax="100" style="width:{{course_percentage}}%">
+                            {% endif %}
+                            <b style="color: white;">{{course_percentage}}% Completed</b>
+                        </div>
+                        {% else %}
+                        <b style="color: black;">0% Completed</b>
+                        {% endif %}
             </div>
             {% else %}
-                <div class="alert alert-danger">
-                    <strong>No lectures found</strong>
-                </div>
+            <div class="alert alert-danger">
+                <strong>No lectures found</strong>
+            </div>
             {% endif %}
             <br>
             {% for module, percent in modules %}
@@ -78,19 +77,20 @@
                             <div class="col-md-3 col-12 my-3">
                                 <div class="progress bg-white">
                                     {% if percent %}
-                                        {% get_module_status user module course as module_status %}
-                                        {% if module_status == "completed" %}
-                                          <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{percent}}"
-                                          aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}%">
+                                    {% get_module_status user module course as module_status %}
+                                    {% if module_status == "completed" %}
+                                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{percent}}"
+                                        aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}%">
                                         {% elif module_status == "inprogress" %}
-                                          <div class="progress-bar bg-warning" role="progressbar"
-                                          aria-valuemin="0" aria-valuemax="100" style="width:{{percent}}%">
-                                        {% endif %}
-                                        <b style="color: white;">{{percent}}% Completed</b>
+                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuemin="0"
+                                            aria-valuemax="100" style="width:{{percent}}%">
+                                            {% endif %}
+                                            <b style="color: white;">{{percent}}% Completed</b>
                                         </div>
-                                    {% else %}
+                                        {% else %}
                                         <b style="color: black;">0% Completed</b>
-                                    {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         
@@ -131,7 +131,7 @@
                                     {% if unit.type == "quiz" %}
                                         {% if unit.quiz.is_exercise %}
                                             <span class="fa fa-pencil"></span>
-                                        {% else %}
+                                            {% else %}
                                             <span class="fa fa-puzzle-piece"></span>
                                         {% endif %}
                                     {% else %}
@@ -143,7 +143,23 @@
                                         {{unit.quiz.description}}
                                     {% endif %}
                                     </td>
+<<<<<<< HEAD
                                    
+=======
+                                    <td>
+                                        {% if unit.type == "lesson" %}
+                                            <a href="" class="detailsbtn">
+                                                View
+                                            </a>
+                                            {% else %}
+                                            {% if unit.quiz.questionpaper_set.get %}
+                                                <a href="{% url 'yaksh:start_quiz' unit.quiz.questionpaper_set.get.id module.id course.id %}" class="detailsbtn">
+                                                    View
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+>>>>>>> 00bb87f70d3a0b24ba443e5173128761ee0f9a84
                                     <td>
                                     {% get_unit_status course module unit user as status %}
                                     {% if status == "completed" %}
@@ -190,9 +206,9 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                {% endfor %}
             </div>
-            <br>
-            {% endfor %}
         </div>
     </div>
 </div>

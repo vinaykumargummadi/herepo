@@ -6,11 +6,38 @@
   color: #09577A;
 }
 
-.navbar {
-  background-color: #09577A !important;
+#manageNavbar {
+  background-color: white !important;
+}
+
+#manageNavbar .navbar-brand {
+  color: #24577A !important;
+}
+
+#manageNavbar .nav-link {
+  color: #24577A !important;
+}
+
+#manageNavbar .fa-chevron-circle-down {
+  font-size: 14px;
+}
+
+#manageNavbar .navbar {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 .title {
   color: #09577A;
+}
+
+.headname {
+  color: white !important;
+  background-color: #09577A;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 /*# sourceMappingURL=bombay.css.map */

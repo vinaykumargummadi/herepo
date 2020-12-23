@@ -58,4 +58,14 @@
 .card .card-body .form-group .divider {
   border-color: #D4F0FC !important;
 }
+
+.headname {
+  color: white !important;
+  background-color: white;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
 /*# sourceMappingURL=login.css.map */
