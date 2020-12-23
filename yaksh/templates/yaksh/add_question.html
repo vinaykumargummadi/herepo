@@ -1,8 +1,7 @@
 {% extends "manage.html" %}
 {% load custom_filters %}
 {% load static %}
-{% block title %} Add Question {% endblock title %}
-{% block pagetitle %} Add Question {% endblock pagetitle %}
+
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'yaksh/css/autotaggit.css' %}">
@@ -15,13 +14,14 @@
 <script type="text/javascript" src="{% static 'yaksh/js/add_question.js' %}"></script>
 <script type="text/javascript" src="{% static 'yaksh/js/mathjax/MathJax.js' %}?config=TeX-MML-AM_CHTML"></script>
 {% endblock %}
-
+{% block title %} Add Question {% endblock title %}
+{% block pagetitle %} Add Question {% endblock pagetitle %}
 {% block onload %} onload='javascript:textareaformat();' {% endblock %}
 
 {% block content %}
-<div class="container-fluid custom">
-  <div class="container">
-    <div class="">
+<div class="container-fluid ">
+  <div class="custom mx-0 mx-md-4">
+    <div class="p-0 p-md-5">
       <a class="back" href="{% url 'yaksh:show_questions' %}">
         <i class="fa fa-reply "></i>&nbsp;Back
       </a>

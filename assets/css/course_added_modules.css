@@ -19,16 +19,13 @@
 }
 
 .card .card-header {
-  background: transparent;
-}
-
-.card .card-header .course-title {
-  font-weight: bold;
-  color: #09577A;
+  border-top-left-radius: 20px !important;
+  border-top-right-radius: 20px;
+  background-color: #09577A;
 }
 
 .card .card-body {
-  border-top: 1px solid #09577A;
+  background-color: #f4faff;
 }
 
 @media screen and (max-width: 520px) {

@@ -3,17 +3,23 @@
 @include button-border;
 .card{
     border: 1px solid $primary-color;
+
     .card-header{ 
-        background: transparent;
-        .course-title{
-            font-weight: bold;
-            color: $primary-color;
-        }
+        border-top-left-radius: 20px !important;
+        border-top-right-radius: 20px;
+        background-color: $primary-color;
     }
     .card-body{
-        border-top: 1px solid $primary-color;
+        background-color: #f4faff;
     }
 }
+ 
+
+
+// .container-fluid{
+//     background-color: red;
+// }
+
 @media screen and (max-width:520px){
     .card{
         .card-header{

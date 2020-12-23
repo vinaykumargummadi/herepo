@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{% static 'css/course_added_modules.css' %}">
 {% endblock %}
 
-<div class="container-fluid">
+<div class="">
     {% if is_modules %}
     {% block pagetitle %} <center>
         <h3>Contest Categories</h3>
@@ -21,28 +21,30 @@
         </div>
     </center>
     {% for module in modules %}
-    <div class="container">
-        <div class="card">
+    <div class="container-fluid">
+        <div class="card shadow">
             <div class="card-header">
-                <a href="{% url 'yaksh:edit_module' course.id module.id %}">
+                <a href="{% url 'yaksh:edit_module' course.id module.id %}" class="text-white">
                     <i class="fa fa-edit"></i>&nbsp;{{module.name}}
                 </a>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <a href="{% url 'yaksh:add_quiz' course.id module.id %}" class="btn btn-success">
-                            <i class="fa fa-plus-circle"></i>&nbsp;Add Quiz
+                        <a href="{% url 'yaksh:add_quiz' course.id module.id %}"><button class="btn btn-success btn-lg">
+                                <i class="fa fa-plus-circle"></i>&nbsp;Add Quiz</button>
+                        </a>
+
+                    </div>
+                    <div class="col">
+                        <a href="{% url 'yaksh:add_exercise' course.id module.id %}"><button
+                                class="btn btn-dark btn-lg"><i class="fa fa-plus-circle"></i>&nbsp;Add
+                                Exercise</button>
                         </a>
                     </div>
                     <div class="col">
-                        <a href="{% url 'yaksh:add_exercise' course.id module.id %}" class="btn btn-dark">
-                            <i class="fa fa-plus-circle"></i>&nbsp;Add Exercise
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="{% url 'yaksh:design_module' module.id course.id %}" class="btn btn-secondary">
-                            Design Category
+                        <a href="{% url 'yaksh:design_module' module.id course.id %}"><button
+                                class="btn btn-secondary btn-lg">Design Category</button>
                         </a>
                     </div>
                 </div>

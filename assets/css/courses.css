@@ -201,6 +201,15 @@ center {
   color: #09577A !important;
 }
 
+.myaddbtn {
+  background-color: #206E04 !important;
+  color: white !important;
+  font-size: 16px !important;
+  border-radius: 10px !important;
+  -webkit-box-shadow: 0px 0px 30px #0000001A;
+          box-shadow: 0px 0px 30px #0000001A;
+}
+
 .shufflename {
   color: #09577A !important;
 }
@@ -238,6 +247,16 @@ center {
 
 .card {
   border: 0;
+}
+
+.avilname {
+  font-size: 10px !important;
+  color: red !important;
+}
+
+.thname {
+  font-size: 20px !important;
+  font-weight: 400 !important;
 }
 
 @media only screen and (max-width: 768px) {
