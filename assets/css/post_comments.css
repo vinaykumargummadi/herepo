@@ -1,6 +1,5 @@
 .bg {
   background-color: #F4FAFF;
-  border: px solid black  !important;
 }
 
 #submit {
@@ -31,7 +30,8 @@
   color: #08577A;
 }
 
-.bg {
-  border: 1px solid #09577A !important;
+.myborder {
+  margin-left: 40px !important;
+  margin-right: 40px !important;
 }
 /*# sourceMappingURL=post_comments.css.map */
