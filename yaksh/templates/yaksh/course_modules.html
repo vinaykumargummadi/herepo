@@ -6,13 +6,14 @@
 <link rel="stylesheet" href="{% static 'css/course_modules.css' %}">
 {% endblock %}
 {% block main %}
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-2">
    
-    <div class="card mycard contentbg pb-4 mx-1 mx-md-4 px-3">
+    <div class="card mycard">
+        
        
-        <div class="mb-3">
+        <div class="">
           
-            <div class="row modulename">
+            <div class="row modulename mx-1 mx-md-4">
                 
                 <div class="col-md-6">
                     {{ course.name }}
@@ -24,6 +25,7 @@
             </div>
            
         </div>
+        <div class="contentbg pb-4  px-3 pt-4">
         <div class="">
         <div class="">
             
@@ -211,6 +213,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 {% endblock %}
