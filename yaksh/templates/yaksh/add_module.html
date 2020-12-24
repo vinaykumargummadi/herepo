@@ -20,16 +20,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="border mx-0 mx-md-5">
+<div class="border mx-0 mx-md-5 p-5">
     <div class="container-fluid mt-5 ml-5">
         {% if course_id %}
-        <a href="{% url 'yaksh:get_course_modules' course_id %}"><button class="btn btn-outline-none"><i class="fa fa-reply fa-2x" aria-hidden="true"></i>
-                Back</button></a>
-
+        <a class="" href="{% url 'yaksh:get_course_modules' course_id %}">
+            <i class="fa fa-reply" aria-hidden="true"></i>&nbsp;Back
+        </a>
         {% else %}
-        <a class="btn btn-primary" href="{% url 'yaksh:show_all_modules' %}">
-            <i class="fa fa-arrow-left"></i>
-            Back
+        <a class="" href="{% url 'yaksh:show_all_modules' %}">
+            <i class="fa fa-reply" aria-hidden="true"></i>&nbsp;Back
         </a>
         {% endif %}
     </div>
@@ -113,14 +112,14 @@
     {% if course_id %}
     <form action="{% url 'yaksh:design_module' module_id course_id %}" method="POST" id="design_course_form">
         {% else %}
-        <form action="{% url 'yaksh:design_module' module_id %}" method="POST" id="design_course_form">
+        <form action="{% url 'yaksh:design_module' module_id %}" method="POST" id="design_course_form" class="">
             {% endif %}
             {% csrf_token %}
             <div class="tab-pane active" id="available-lesson-quiz">
                 <div class="row">
                     <div class="col-md-12 available-list">
                         <div id="fixed-available-wrapper">
-                            <p><u><b>Available Lessons and quizzes: (Add Lessons and Quizzes)</b></u></p>
+                            <p class="p-5"><u><b>Available Lessons and quizzes: (Add Lessons and Quizzes)</b></u></p>
                             <div id="fixed-available">
                                 <ul class="inputs-list">
                                     {% for type, unit in quiz_les_list %}
@@ -142,12 +141,10 @@
                             </div>
                         </div>
                         <br>
-                        <center>
-                            <button class="btn btn-success" type="submit" id="submit" name="Add"><i
-                                    class="fa fa-plus-square"></i>
-                                &nbsp;Add to Module
-                            </button>
-                        </center>
+                        <button class="btn btn-success float-right" type="submit" id="submit" name="Add"><i
+                                class="fa fa-plus-square"></i>
+                            &nbsp;Add to Module
+                        </button>
                         <br><br>
                     </div>
                     <div class="col-md-12 col-md-offset-2">
@@ -210,11 +207,12 @@
                         </div>
                         <br>
                         <center>
-                            <button id="Remove" name="Remove" class="btn btn-danger" type="submit"> <i
+                            <button id="Remove" name="Remove" class="btn text-white" type="submit"> <i
                                     class="fa fa-minus-square"></i>&nbsp;Remove from Module</button>
-                            <button id="Change" name="Change" class="btn btn-info" type="submit"><i
+                            <button id="Change" name="Change" class="btn btn-info order" type="submit"><i
                                     class="fa fa-reorder"></i>&nbsp;Change Order</button>
-                            <button id="Change" name="Change_prerequisite" class="btn btn-primary" type="submit"> Change
+                            <button id="Change" name="Change_prerequisite" class="btn change text-white" type="submit">
+                                Change
                                 Prerequisite</button>
                         </center>
                     </div>

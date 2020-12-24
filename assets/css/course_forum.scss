@@ -1,5 +1,15 @@
 @import 'function.scss';
 
+.headname{
+    color:white !important;
+    background-color:transparent !important;
+    padding: 20px;
+    position: relative;
+    top:20px;
+    border-top-left-radius:none;
+    border-top-right-radius: none;
+}
+
 #posts_table{
     background-color: white;
     border-radius: 20px;

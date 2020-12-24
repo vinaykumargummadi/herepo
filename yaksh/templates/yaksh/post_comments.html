@@ -9,9 +9,11 @@
 
 {% block content %}
 <div class="container-flid">
-    <a class="" href="{% url 'yaksh:course_forum' course.id %}">
-        <i class="fa fa-arrow-left"></i>&nbsp;Back to Posts
-    </a>
+    <div class="ml-5">
+        <a class="" href="{% url 'yaksh:course_forum' course.id %}">
+            <i class="fa fa-arrow-left"></i>&nbsp;Back to Posts
+        </a>
+    </div>
     <br>
     <br>
     {% if messages %}
