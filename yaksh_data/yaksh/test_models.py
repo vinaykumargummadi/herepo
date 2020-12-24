@@ -476,12 +476,12 @@ class ProfileTestCases(unittest.TestCase):
         self.creator = User.objects.get(username='creator')
         self.profile = Profile.objects.get(user=self.creator)
         self.teacher = User.objects.create_user(
-                                            username='teacher_profile',
-                                            password='teacher_profile',
-                                            email='teacher_profile@test.com')
+                                            username='mentor_profile',
+                                            password='mentor_profile',
+                                            email='mentor_profile@test.com')
         Profile.objects.create(
             user=self.teacher, roll_number=123, institute='IIT',
-            is_moderator=True, department='Chemical', position='Teacher'
+            is_moderator=True, department='Chemical', position='Mentor'
         )
         self.course = Course.objects.create(
             name="Course For ProfileTestCase",
@@ -2411,7 +2411,7 @@ class PostModelTestCases(unittest.TestCase):
             roll_number=3,
             is_moderator=True,
             department='Chemical',
-            position='Teacher'
+            position='Mentor'
         )
 
         self.course = Course.objects.create(

@@ -41,6 +41,7 @@ class JavaStdIOEvaluator(StdIOEvaluator):
         return compile_command
 
     def compile_code(self):
+        print("Hi")
         self.submit_code_path = self.create_submit_code_file('Test.java')
         if not isfile(self.submit_code_path):
             msg = "No file at %s or Incorrect path" % self.submit_code_path

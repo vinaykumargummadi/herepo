@@ -1,7 +1,7 @@
 from django import forms
 from yaksh.models import (
     get_model_class, Profile, Quiz, Question, Course, QuestionPaper, LearningModule, TestCase, languages, question_types, Post, Comment,
-    Topic
+    Topic, Invite
 )
 from grades.models import GradingSystem
 from django.contrib.auth import authenticate
@@ -427,22 +427,22 @@ class CourseForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(CourseForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course Name'}
+            {'class': form_input_class, 'placeholder': 'Contest Name'}
         )
         self.fields['enrollment'].widget.attrs.update(
             {'class': 'custom-select'}
         )
         self.fields['code'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course Code'}
+            {'class': form_input_class, 'placeholder': 'Contest Code'}
         )
         self.fields['instructions'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course instructions'}
+            {'class': form_input_class, 'placeholder': 'Contest instructions'}
         )
         self.fields['start_enroll_time'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course Start DateTime'}
+            {'class': form_input_class, 'placeholder': 'Contest Start DateTime'}
         )
         self.fields['end_enroll_time'].widget.attrs.update(
-            {'class': form_input_class, 'placeholder': 'Course End DateTime'}
+            {'class': form_input_class, 'placeholder': 'Contest End DateTime'}
         )
         self.fields['grading_system'].widget.attrs.update(
             {'class': 'custom-select'}
@@ -678,3 +678,8 @@ class VideoQuizForm(forms.ModelForm):
                     "Marker time should be in the format hh:mm:ss"
                 )
         return timer
+
+class InviteForm(forms.ModelForm):
+    class Meta:
+        model = Invite
+        fields = ['email']

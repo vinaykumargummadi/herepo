@@ -45,7 +45,7 @@ from yaksh.forms import (
     UserRegisterForm, UserLoginForm, QuizForm, QuestionForm,
     QuestionFilterForm, CourseForm, ProfileForm,
     UploadFileForm, FileForm, QuestionPaperForm, LessonFileForm, LearningModuleForm, ExerciseForm, TestcaseForm,
-    SearchFilterForm, PostForm, CommentForm, TopicForm, VideoQuizForm
+    SearchFilterForm, PostForm, CommentForm, TopicForm, VideoQuizForm, InviteForm
 )
 from yaksh.settings import SERVER_POOL_PORT, SERVER_HOST_NAME
 from .settings import URL_ROOT
@@ -55,7 +55,13 @@ from .send_emails import (send_user_mail,
 from .decorators import email_verified, has_profile
 from .tasks import regrade_papers
 from notifications_plugin.models import Notification
-
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+import random
+import string
+from django.conf import settings
+from textwrap import dedent
+from .send_emails import send_invite
 
 def my_redirect(url):
     """An overridden redirect to deal with URL_ROOT-ing. See settings.py
@@ -190,7 +196,7 @@ def quizlist_user(request, enrolled=None, msg=None):
             ).order_by('-id'))
         courses = list(enrolled_courses)
         courses.extend(remaining_courses)
-        title = 'All Teams'
+        title = 'All Courses'
 
     for course in courses:
         if course.students.filter(id=user.id).exists():
@@ -211,6 +217,7 @@ def quizlist_user(request, enrolled=None, msg=None):
     }
 
     return my_render_to_response(request, "yaksh/quizzes_user.html", context)
+
 
 
 @login_required
@@ -330,7 +337,7 @@ def add_quiz(request, course_id=None, module_id=None, quiz_id=None):
     Create a new quiz and store it."""
     user = request.user
     if not is_moderator(user):
-        raise Http404('You are not allowed to view this course !')
+        raise Http404('You are not allowed to view this contest !')
     if quiz_id:
         quiz = get_object_or_404(Quiz, pk=quiz_id)
         if quiz.creator != user and not course_id:
@@ -378,7 +385,7 @@ def add_quiz(request, course_id=None, module_id=None, quiz_id=None):
 def add_exercise(request, course_id=None, module_id=None, quiz_id=None):
     user = request.user
     if not is_moderator(user):
-        raise Http404('You are not allowed to view this course !')
+        raise Http404('You are not allowed to view this contest !')
     if quiz_id:
         quiz = get_object_or_404(Quiz, pk=quiz_id)
         if quiz.creator != user and not course_id:
@@ -390,7 +397,7 @@ def add_exercise(request, course_id=None, module_id=None, quiz_id=None):
     if course_id:
         course = get_object_or_404(Course, pk=course_id)
         if not course.is_creator(user) and not course.is_teacher(user):
-            raise Http404('This Course does not belong to you')
+            raise Http404('This Contest does not belong to you')
 
     context = {}
     if request.method == "POST":
@@ -494,7 +501,7 @@ def special_start(request, micromanager_id=None):
     quest_paper = get_object_or_404(QuestionPaper, quiz=quiz)
 
     if not course.is_enrolled(user):
-        msg = 'You are not enrolled in {0} course'.format(course.name)
+        msg = 'You are not enrolled in {0} contest'.format(course.name)
         return quizlist_user(request, msg=msg)
 
     if not micromanager.can_student_attempt():
@@ -557,21 +564,21 @@ def start(request, questionpaper_id=None, attempt_num=None, course_id=None,
     # unit module prerequiste check
     if learning_module.has_prerequisite():
         if not learning_module.is_prerequisite_complete(user, course):
-            msg = "You have not completed the module previous to {0}".format(
+            msg = "You have not completed the category previous to {0}".format(
                 learning_module.name)
             return course_modules(request, course_id, msg)
 
     if learning_module.check_prerequisite_passes:
         if not learning_module.is_prerequisite_passed(user, course):
             msg = (
-                "You have not successfully passed the module"
+                "You have not successfully passed the category"
                 " previous to {0}".format(learning_module.name)
             )
             return course_modules(request, course_id, msg)
 
     # is user enrolled in the course
     if not course.is_enrolled(user):
-        msg = 'You are not enrolled in {0} course'.format(course.name)
+        msg = 'You are not joined in {0} contest'.format(course.name)
         if is_moderator(user) and course.is_trial:
             return prof_manage(request, msg=msg)
         return quizlist_user(request, msg=msg)
@@ -596,7 +603,7 @@ def start(request, questionpaper_id=None, attempt_num=None, course_id=None,
     if learning_unit.has_prerequisite():
         if not learning_unit.is_prerequisite_complete(
                 user, learning_module, course):
-            msg = "You have not completed the previous Lesson/Quiz/Exercise"
+            msg = "You have not completed the previous Quiz/Exercise"
             if is_moderator(user) and course.is_trial:
                 return prof_manage(request, msg=msg)
             return view_module(request, module_id=module_id,
@@ -782,8 +789,10 @@ def skip(request, q_id, next_q=None, attempt_num=None, questionpaper_id=None,
 @email_verified
 def check(request, q_id, attempt_num=None, questionpaper_id=None,
           course_id=None, module_id=None):
+    print("I am in check")
     """Checks the answers of the user for particular question"""
     user = request.user
+    print('Hai user', user)
     paper = get_object_or_404(
         AnswerPaper,
         user=request.user,
@@ -903,6 +912,7 @@ def check(request, q_id, attempt_num=None, questionpaper_id=None,
         if current_question.type in ['code', 'upload']:
             if (paper.time_left() <= 0 and not
                     paper.question_paper.quiz.is_exercise):
+                print("i am in get_result")
                 url = '{0}:{1}'.format(SERVER_HOST_NAME, SERVER_POOL_PORT)
                 result_details = get_result_from_code_server(url, uid,
                                                              block=True)
@@ -914,6 +924,7 @@ def check(request, q_id, attempt_num=None, questionpaper_id=None,
                                      module_id=module_id,
                                      previous_question=current_question)
             else:
+                print('i m in else')
                 return JsonResponse(result)
         else:
             next_question, error_message, paper = _update_paper(
@@ -1050,7 +1061,7 @@ def add_course(request, course_id=None):
     if course_id:
         course = Course.objects.get(id=course_id)
         if not course.is_creator(user) and not course.is_teacher(user):
-            raise Http404("You are not allowed to view this course")
+            raise Http404("You are not allowed to view this contest")
     else:
         course = None
     if not is_moderator(user):
@@ -1065,7 +1076,7 @@ def add_course(request, course_id=None):
             messages.success(
                 request, "Saved {0} successfully".format(new_course.name)
                 )
-            return my_redirect('/exam/manage/courses')
+            return my_redirect('/exam/manage/contests')
         else:
             return my_render_to_response(
                 request, 'yaksh/add_course.html', {'form': form}
@@ -1084,7 +1095,7 @@ def enroll_request(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_active_enrollment() and course.hidden:
         msg = (
-            'Unable to add enrollments for this course, please contact your '
+            'Unable to add enrollments for this contest, please contact your '
             'instructor/administrator.'
         )
         messages.warning(request, msg)
@@ -1097,7 +1108,7 @@ def enroll_request(request, course_id):
             )
         )
     if is_moderator(user):
-        return my_redirect('/exam/manage/courses')
+        return my_redirect('/exam/manage/contests')
     else:
         return my_redirect('/exam/quizzes/')
 
@@ -1106,6 +1117,7 @@ def enroll_request(request, course_id):
 @email_verified
 def self_enroll(request, course_id):
     user = request.user
+    print('----enrolling user is', user)
     course = get_object_or_404(Course, pk=course_id)
     if course.is_self_enroll():
         was_rejected = False
@@ -1166,7 +1178,7 @@ def course_detail(request, course_id):
 
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
 
     return my_render_to_response(
         request, 'yaksh/course_detail.html', {'course': course}
@@ -1183,7 +1195,7 @@ def enroll_user(request, course_id, user_id=None, was_rejected=False):
     course = get_object_or_404(Course, id=course_id)
     if not course.is_active_enrollment():
         msg = (
-            'Enrollment for this course has been closed,'
+            'Joining for this contest has been closed,'
             ' please contact your '
             'instructor/administrator.'
         )
@@ -1191,11 +1203,11 @@ def enroll_user(request, course_id, user_id=None, was_rejected=False):
         return redirect('yaksh:course_students', course_id=course_id)
 
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
 
     user = User.objects.get(id=user_id)
     course.enroll(was_rejected, user)
-    messages.success(request, 'Enrolled student successfully')
+    messages.success(request, 'Joined member successfully')
     return redirect('yaksh:course_students', course_id=course_id)
 
 
@@ -1207,10 +1219,10 @@ def reject_user(request, course_id, user_id=None, was_enrolled=False):
         raise Http404('You are not allowed to view this page')
     course = get_object_or_404(Course, id=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     user = User.objects.get(id=user_id)
     course.reject(was_enrolled, user)
-    messages.success(request, "Rejected students successfully")
+    messages.success(request, "Rejected members successfully")
     return redirect('yaksh:course_students', course_id=course_id)
 
 
@@ -1225,7 +1237,7 @@ def enroll_reject_user(request,
 
     if not course.is_active_enrollment():
         msg = (
-            'Enrollment for this course has been closed,'
+            'Enrollment for this contest has been closed,'
             ' please contact your '
             'instructor/administrator.'
         )
@@ -1233,26 +1245,26 @@ def enroll_reject_user(request,
         return redirect('yaksh:course_students', course_id=course_id)
 
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
 
     if request.method == 'POST':
         if 'enroll' in request.POST:
             enroll_ids = request.POST.getlist('check')
             if not enroll_ids:
-                messages.warning(request, "Please select atleast one student")
+                messages.warning(request, "Please select atleast one member")
                 return redirect('yaksh:course_students', course_id=course_id)
             users = User.objects.filter(id__in=enroll_ids)
             course.enroll(was_rejected, *users)
-            messages.success(request, "Enrolled student(s) successfully")
+            messages.success(request, "Joined member(s) successfully")
             return redirect('yaksh:course_students', course_id=course_id)
         if 'reject' in request.POST:
             reject_ids = request.POST.getlist('check')
             if not reject_ids:
-                messages.warning(request, "Please select atleast one student")
+                messages.warning(request, "Please select atleast one member")
                 return redirect('yaksh:course_students', course_id=course_id)
             users = User.objects.filter(id__in=reject_ids)
             course.reject(was_enrolled, *users)
-            messages.success(request, "Rejected students successfully")
+            messages.success(request, "Rejected members successfully")
             return redirect('yaksh:course_students', course_id=course_id)
     return redirect('yaksh:course_students', course_id=course_id)
 
@@ -1266,7 +1278,7 @@ def send_mail(request, course_id, user_id=None):
 
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
 
     message = None
     if request.method == 'POST':
@@ -1297,7 +1309,7 @@ def toggle_course_status(request, course_id):
 
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
 
     if course.active:
         course.deactivate()
@@ -1307,7 +1319,7 @@ def toggle_course_status(request, course_id):
         message = '{0} activated successfully'.format(course.name)
     course.save()
     messages.info(request, message)
-    return my_redirect("/exam/manage/courses")
+    return my_redirect("/exam/manage/contests")
 
 
 @login_required
@@ -1359,7 +1371,7 @@ def monitor(request, quiz_id=None, course_id=None):
         quiz = get_object_or_404(Quiz, id=quiz_id)
         course = get_object_or_404(Course, id=course_id)
         if not course.is_creator(user) and not course.is_teacher(user):
-            raise Http404('This course does not belong to you')
+            raise Http404('This contest does not belong to you')
         q_paper = QuestionPaper.objects.filter(quiz__is_trial=False,
                                                quiz_id=quiz_id).distinct()
     except (QuestionPaper.DoesNotExist, Course.DoesNotExist):
@@ -1457,7 +1469,7 @@ def design_questionpaper(request, course_id, quiz_id, questionpaper_id=None):
     if course_id:
         course = get_object_or_404(Course, pk=course_id)
         if not course.is_creator(user) and not course.is_teacher(user):
-            raise Http404('This Course does not belong to you')
+            raise Http404('This Contest does not belong to you')
 
     filter_form = QuestionFilterForm(user=user)
     questions = None
@@ -1833,7 +1845,7 @@ def download_quiz_csv(request, course_id, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     if not course.is_creator(current_user) and \
             not course.is_teacher(current_user):
-        raise Http404('The quiz does not belong to your course')
+        raise Http404('The quiz does not belong to your contest')
     users = course.get_enrolled().order_by('first_name')
     if not users:
         return monitor(request, quiz_id)
@@ -1940,7 +1952,7 @@ def grade_user(request, quiz_id=None, user_id=None, attempt_number=None,
         course = get_object_or_404(Course, id=course_id)
         if not course.is_creator(current_user) and not \
                 course.is_teacher(current_user):
-            raise Http404('This course does not belong to you')
+            raise Http404('This contest does not belong to you')
         has_quiz_assignments = AssignmentUpload.objects.filter(
             course_id=course_id, question_paper_id__in=questionpaper_id
             ).exists()
@@ -1993,7 +2005,7 @@ def grade_user(request, quiz_id=None, user_id=None, attempt_number=None,
             paper.comments = request.POST.get(
                 'comments_%d' % paper.question_paper.id, 'No comments')
             paper.save()
-        messages.success(request, "Student data saved successfully")
+        messages.success(request, "Member data saved successfully")
 
         course_status = CourseStatus.objects.filter(
             course_id=course.id, user_id=user.id)
@@ -2021,7 +2033,8 @@ def view_profile(request):
 @login_required
 @email_verified
 def edit_profile(request):
-    """ edit profile details facility for moderator and students """
+    print('i m in edit profile')
+    """ edit profile details facility for moderator and members """
 
     user = request.user
     if is_moderator(user):
@@ -2033,8 +2046,9 @@ def edit_profile(request):
         profile = Profile.objects.get(user_id=user.id)
     except Profile.DoesNotExist:
         profile = None
-
+    print(request.method == 'POST')
     if request.method == 'POST':
+        print('in post method')
         form = ProfileForm(request.POST, user=user, instance=profile)
         if form.is_valid():
             form_data = form.save(commit=False)
@@ -2095,7 +2109,7 @@ def search_teacher(request, course_id):
 @login_required
 @email_verified
 def toggle_moderator_role(request):
-    """ Allow moderator to switch to student and back """
+    """ Allow moderator to switch to member and back """
 
     user = request.user
 
@@ -2118,7 +2132,7 @@ def toggle_moderator_role(request):
 @login_required
 @email_verified
 def add_teacher(request, course_id):
-    """ add teachers to the course """
+    """ add mentorss to the course """
 
     user = request.user
 
@@ -2139,7 +2153,7 @@ def add_teacher(request, course_id):
         course.add_teachers(*teachers)
         context['status'] = True
         context['teachers_added'] = teachers
-        messages.success(request, "Added teachers successfully")
+        messages.success(request, "Added mentors successfully")
     context['is_add_teacher'] = True
     return my_render_to_response(request, 'yaksh/course_detail.html', context)
 
@@ -2160,9 +2174,9 @@ def remove_teachers(request, course_id):
         if teacher_ids:
             teachers = User.objects.filter(id__in=teacher_ids)
             course.remove_teachers(*teachers)
-            messages.success(request, "Removed teachers successfully")
+            messages.success(request, "Removed mentors successfully")
         else:
-            messages.warning(request, "Please select atleast one teacher")
+            messages.warning(request, "Please select atleast one mentor")
     return course_teachers(request, course_id)
 
 
@@ -2248,9 +2262,9 @@ def create_demo_course(request):
     demo_course = Course()
     success = demo_course.create_demo(user)
     if success:
-        msg = "Created Demo course successfully"
+        msg = "Created Demo contest successfully"
     else:
-        msg = "Demo course already created"
+        msg = "Demo contest already created"
     return prof_manage(request, msg)
 
 
@@ -2292,7 +2306,7 @@ def download_course_csv(request, course_id):
     course = Course.objects.prefetch_related("learning_module").get(
         id=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('The question paper does not belong to your course')
+        raise Http404('The question paper does not belong to your contest')
     students = course.get_only_students().annotate(
         roll_number=F('profile__roll_number'),
         institute=F('profile__institute')
@@ -2630,7 +2644,7 @@ def duplicate_course(request, course_id):
         duplicate_course = course.create_duplicate_course(user)
         msg = dedent(
             '''\
-            Course duplication successful with the name {0}'''.format(
+            Contest duplication successful with the name {0}'''.format(
                 duplicate_course.name
             )
         )
@@ -2638,8 +2652,8 @@ def duplicate_course(request, course_id):
     else:
         msg = dedent(
             '''\
-            You do not have permissions to clone {0} course, please contact
-            your instructor/administrator.'''.format(course.name)
+            You do not have permissions to clone {0} contest, please contact
+            your administrator.'''.format(course.name)
         )
         messages.warning(request, msg)
     return my_redirect(reverse('yaksh:courses'))
@@ -2670,7 +2684,7 @@ def show_lesson(request, lesson_id, module_id, course_id):
     user = request.user
     course = Course.objects.get(id=course_id)
     if user not in course.students.all():
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     if not course.active or not course.is_active_enrollment():
         msg = "{0} is either expired or not active".format(course.name)
         return quizlist_user(request, msg=msg)
@@ -2686,13 +2700,13 @@ def show_lesson(request, lesson_id, module_id, course_id):
         return view_module(request, module_id, course_id, msg)
     if learn_module.has_prerequisite():
         if not learn_module.is_prerequisite_complete(user, course):
-            msg = "You have not completed the module previous to {0}".format(
+            msg = "You have not completed the category previous to {0}".format(
                 learn_module.name)
             return view_module(request, module_id, course_id, msg)
     if learn_module.check_prerequisite_passes:
         if not learn_module.is_prerequisite_passed(user, course):
             msg = (
-                "You have not successfully passed the module"
+                "You have not successfully passed the category"
                 " previous to {0}".format(learn_module.name)
             )
             return view_module(request, module_id, course_id, msg)
@@ -2708,7 +2722,7 @@ def show_lesson(request, lesson_id, module_id, course_id):
     all_modules = course.get_learning_modules()
     if learn_unit.has_prerequisite():
         if not learn_unit.is_prerequisite_complete(user, learn_module, course):
-            msg = "You have not completed previous Lesson/Quiz/Exercise"
+            msg = "You have not completed previous Quiz/Exercise"
             return view_module(request, learn_module.id, course_id, msg=msg)
 
     lesson_ct = ContentType.objects.get_for_model(learn_unit.lesson)
@@ -2757,7 +2771,7 @@ def design_module(request, module_id, course_id=None):
     if course_id:
         course = Course.objects.get(id=course_id)
         if not course.is_creator(user) and not course.is_teacher(user):
-            raise Http404('This course does not belong to you')
+            raise Http404('This contest does not belong to you')
     learning_module = LearningModule.objects.get(id=module_id)
     if request.method == "POST":
         if "Add" in request.POST:
@@ -2782,9 +2796,9 @@ def design_module(request, module_id, course_id=None):
                             type=type)
                     to_add_list.append(unit)
                 learning_module.learning_unit.add(*to_add_list)
-                messages.success(request, "Lesson/Quiz added successfully")
+                messages.success(request, "Quiz added successfully")
             else:
-                messages.warning(request, "Please select a lesson/quiz to add")
+                messages.warning(request, "Please select a quiz to add")
 
         if "Change" in request.POST:
             order_list = request.POST.get("ordered_list")
@@ -2800,7 +2814,7 @@ def design_module(request, module_id, course_id=None):
                 messages.success(request, "Order changed successfully")
             else:
                 messages.warning(
-                    request, "Please select a lesson/quiz to change"
+                    request, "Please select a quiz to change"
                 )
 
         if "Remove" in request.POST:
@@ -2809,11 +2823,11 @@ def design_module(request, module_id, course_id=None):
                 learning_module.learning_unit.remove(*remove_values)
                 LearningUnit.objects.filter(id__in=remove_values).delete()
                 messages.success(
-                    request, "Lessons/quizzes deleted successfully"
+                    request, "quizzes deleted successfully"
                 )
             else:
                 messages.warning(
-                    request, "Please select a lesson/quiz to remove"
+                    request, "Please select a quiz to remove"
                 )
 
         if "Change_prerequisite" in request.POST:
@@ -2829,7 +2843,7 @@ def design_module(request, module_id, course_id=None):
             else:
                 messages.warning(
                     request,
-                    "Please select a lesson/quiz to change prerequisite"
+                    "Please select a quiz to change prerequisite"
                 )
 
    
@@ -2852,11 +2866,11 @@ def add_module(request, course_id=None, module_id=None):
     if course_id:
         course = Course.objects.get(id=course_id)
         if not course.is_creator(user) and not course.is_teacher(user):
-            raise Http404('This course does not belong to you')
+            raise Http404('This contest does not belong to you')
     if module_id:
         module = LearningModule.objects.get(id=module_id)
         if not module.creator == user and not course_id:
-            raise Http404('This Learning Module does not belong to you')
+            raise Http404('This Learning Category does not belong to you')
     else:
         module = None
     context = {}
@@ -2895,7 +2909,7 @@ def get_next_unit(request, course_id, module_id, current_unit_id=None,
     course = Course.objects.prefetch_related("learning_module").get(
         id=course_id)
     if not course.students.filter(id=user.id).exists():
-        raise Http404('You are not enrolled for this course!')
+        raise Http404('You are not enrolled for this contest!')
     learning_module = course.learning_module.prefetch_related(
         "learning_unit").get(id=module_id)
 
@@ -2904,7 +2918,7 @@ def get_next_unit(request, course_id, module_id, current_unit_id=None,
             id=current_unit_id)
     else:
         next_module = course.next_module(learning_module.id)
-        return my_redirect("/exam/quizzes/view_module/{0}/{1}".format(
+        return my_redirect("/exam/quizzes/view_category/{0}/{1}".format(
             next_module.id, course_id))
 
     if first_unit:
@@ -2928,14 +2942,14 @@ def get_next_unit(request, course_id, module_id, current_unit_id=None,
                                            current_learning_unit.id)
         if is_last_unit:
             next_module = course.next_module(learning_module.id)
-            return my_redirect("/exam/quizzes/view_module/{0}/{1}/".format(
+            return my_redirect("/exam/quizzes/view_category/{0}/{1}/".format(
                 next_module.id, course.id))
 
     if next_unit.type == "quiz":
         return my_redirect("/exam/start/{0}/{1}/{2}".format(
             next_unit.quiz.questionpaper_set.get().id, module_id, course_id))
     else:
-        return my_redirect("/exam/quizzes/view_module/{0}/{1}/".format(
+        return my_redirect("/exam/quizzes/view_category/{0}/{1}/".format(
                 next_module.id, course.id))
 
 
@@ -2947,7 +2961,7 @@ def design_course(request, course_id):
         raise Http404('You are not allowed to view this page!')
     course = Course.objects.get(id=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     context = {}
     if request.method == "POST":
         if "Add" in request.POST:
@@ -2967,9 +2981,9 @@ def design_course(request, course_id):
                     module.save()
                     to_add_list.append(module)
                 course.learning_module.add(*to_add_list)
-                messages.success(request, "Modules added successfully")
+                messages.success(request, "Categories added successfully")
             else:
-                messages.warning(request, "Please select atleast one module")
+                messages.warning(request, "Please select atleast one category")
 
         if "Change" in request.POST:
             order_list = request.POST.get("ordered_list")
@@ -2984,15 +2998,15 @@ def design_course(request, course_id):
                         learning_module.save()
                 messages.success(request, "Changed order successfully")
             else:
-                messages.warning(request, "Please select atleast one module")
+                messages.warning(request, "Please select atleast one category")
 
         if "Remove" in request.POST:
             remove_values = request.POST.getlist("delete_list")
             if remove_values:
                 course.learning_module.remove(*remove_values)
-                messages.success(request, "Modules removed successfully")
+                messages.success(request, "Categories removed successfully")
             else:
-                messages.warning(request, "Please select atleast one module")
+                messages.warning(request, "Please select atleast one category")
 
         if "change_prerequisite_completion" in request.POST:
             unit_list = request.POST.getlist("check_prereq")
@@ -3005,7 +3019,7 @@ def design_course(request, course_id):
                     request, "Changed prerequisite check successfully"
                 )
             else:
-                messages.warning(request, "Please select atleast one module")
+                messages.warning(request, "Please select atleast one category")
 
         if "change_prerequisite_passing" in request.POST:
             unit_list = request.POST.getlist("check_prereq_passes")
@@ -3018,7 +3032,7 @@ def design_course(request, course_id):
                     request, "Changed prerequisite check successfully"
                 )
             else:
-                messages.warning(request, "Please select atleast one module")
+                messages.warning(request, "Please select atleast one category")
 
     added_learning_modules = course.get_learning_modules()
     all_learning_modules = LearningModule.objects.filter(
@@ -3040,7 +3054,7 @@ def view_module(request, module_id, course_id, msg=None):
     user = request.user
     course = Course.objects.get(id=course_id)
     if user not in course.students.all():
-        raise Http404('You are not enrolled for this course!')
+        raise Http404('You are not joined for this contest!')
     context = {}
     if not course.active or not course.is_active_enrollment():
         msg = "{0} is either expired or not active".format(course.name)
@@ -3053,14 +3067,14 @@ def view_module(request, module_id, course_id, msg=None):
     all_modules = course.get_learning_modules()
     if learning_module.has_prerequisite():
         if not learning_module.is_prerequisite_complete(user, course):
-            msg = "You have not completed the module previous to {0}".format(
+            msg = "You have not completed the category previous to {0}".format(
                 learning_module.name)
             return course_modules(request, course_id, msg)
 
     if learning_module.check_prerequisite_passes:
         if not learning_module.is_prerequisite_passed(user, course):
             msg = (
-                "You have not successfully passed the module"
+                "You have not successfully passed the category"
                 " previous to {0}".format(learning_module.name)
             )
             return course_modules(request, course_id, msg)
@@ -3083,7 +3097,7 @@ def course_modules(request, course_id, msg=None):
     user = request.user
     course = Course.objects.get(id=course_id)
     if user not in course.students.all():
-        msg = 'You are not enrolled for this course!'
+        msg = 'You are not joined for this course!'
         return quizlist_user(request, msg=msg)
 
     if not course.active or not course.is_active_enrollment():
@@ -3113,7 +3127,7 @@ def course_status(request, course_id):
         raise Http404('You are not allowed to view this page!')
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     students = course.students.order_by("-id")
     students_no = students.count()
     paginator = Paginator(students, 100)
@@ -3176,12 +3190,12 @@ def get_user_data(request, course_id, student_id):
     response_kwargs['content_type'] = 'application/json'
     course = Course.objects.get(id=course_id)
     if not is_moderator(user):
-        data['msg'] = 'You are not a moderator'
+        data['msg'] = 'You are not a mentor'
         data['status'] = False
     elif not course.is_creator(user) and not course.is_teacher(user):
         msg = dedent(
             """\
-            You are neither course creator nor course teacher for {0}
+            You are neither contest creator nor contest mentor for {0}
             """.format(course.name)
             )
         data['msg'] = msg
@@ -3218,10 +3232,10 @@ def download_course(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     if (not course.is_creator(user) and not course.is_teacher(user) and not
             course.is_student(user)):
-        raise Http404("You are not allowed to download {0} course".format(
+        raise Http404("You are not allowed to download {0} contest".format(
             course.name))
     if not course.has_lessons():
-        raise Http404("{0} course does not have any lessons".format(
+        raise Http404("{0} contest does not have any lessons".format(
             course.name))
     current_dir = os.path.dirname(__file__)
     course_name = course.name.replace(" ", "_")
@@ -3246,6 +3260,7 @@ def download_course(request, course_id):
 @login_required
 @email_verified
 def course_students(request, course_id):
+    print("work")
     user = request.user
     if not is_moderator(user):
         raise Http404('You are not allowed to view this page!')
@@ -3256,12 +3271,60 @@ def course_students(request, course_id):
     enrolled_users = course.get_enrolled()
     requested_users = course.get_requests()
     rejected_users = course.get_rejected()
+
+    if request.method == "POST":
+        form = InviteForm(request.POST)
+        if form.is_valid():
+            e = form.cleaned_data['email']
+            email = e.split(',')
+            print('----user email is',email)
+            
+            for i in email:
+                username = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
+                print('------username',username)
+                password = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
+                print('-----password is',password)
+
+                user = User.objects.create_user(username = username, email = i, password = password)
+                print('-----created user is', user)
+                user.save()
+                print('--------user saved')
+            
+                asdf = send_invite("Invite",username,password,[i])
+                course = get_object_or_404(Course, pk=course_id)
+                print('----course-----',course)
+                print('True or False',course.is_self_enroll())
+                print('----enrolling user is', user)
+                course = get_object_or_404(Course, pk=course_id)
+                if course.is_self_enroll():
+                    was_rejected = False
+                    course.enroll(was_rejected, user)
+                messages.success(
+                    request,
+                    "Joined Successfully in {0} by {1}".format(
+                        course.name, course.creator.get_full_name()
+                        )
+                )
+                
+                # if course.is_self_enroll():
+                #     return self_enroll(request, course_id)
+                    
+                #     print('----enrolled----')
+                # else:
+                #      return enroll_request(request, course_id)
+                    #course.request(user)
+
+            return HttpResponseRedirect(reverse("yaksh:course_students", args=[course_id]))
+    else:
+        form = InviteForm()
+
     context = {
         "enrolled_users": enrolled_users,
         "requested_users": requested_users,
         "course": course,
         "rejected_users": rejected_users,
-        "is_students": True
+        "is_students": True,
+        "form":form
     }
     return my_render_to_response(request, 'yaksh/course_detail.html', context)
 
@@ -3304,7 +3367,7 @@ def download_course_progress(request, course_id):
         raise Http404('You are not allowed to view this page!')
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     students = course.students.order_by("-id")
     stud_details = [(student.get_full_name(), course.get_grade(student),
                      course.get_completion_percent(student),
@@ -3369,7 +3432,7 @@ def course_forum(request, course_id):
     course_ct = ContentType.objects.get_for_model(course)
     if (not course.is_creator(user) and not course.is_teacher(user)
             and not course.is_student(user)):
-        raise Http404('You are not enrolled in {0} course'.format(course.name))
+        raise Http404('You are not joined in {0} contest'.format(course.name))
     search_term = request.GET.get('search_post')
     if search_term:
         posts = Post.objects.filter(
@@ -3421,7 +3484,7 @@ def post_comments(request, course_id, uuid):
     course = get_object_or_404(Course, id=course_id)
     if (not course.is_creator(user) and not course.is_teacher(user)
             and not course.is_student(user)):
-        raise Http404('You are not enrolled in {0} course'.format(course.name))
+        raise Http404('You are not joined in {0} contest'.format(course.name))
     form = CommentForm()
     if request.method == "POST":
         form = CommentForm(request.POST, request.FILES)
@@ -3449,7 +3512,7 @@ def hide_post(request, course_id, uuid):
     course = get_object_or_404(Course, id=course_id)
     if (not course.is_creator(user) and not course.is_teacher(user)):
         raise Http404(
-            'Only a course creator or a teacher can delete the post.'
+            'Only a contest creator or a mentor can delete the post.'
         )
     post = get_object_or_404(Post, uid=uuid)
     post.comment.active = False
@@ -3466,7 +3529,7 @@ def hide_comment(request, course_id, uuid):
         course = get_object_or_404(Course, id=course_id)
         if (not course.is_creator(user) and not course.is_teacher(user)):
             raise Http404(
-                'Only a course creator or a teacher can delete the comments'
+                'Only a contest creator or a mentor can delete the comments'
             )
     comment = get_object_or_404(Comment, uid=uuid)
     post_uid = comment.post_field.uid
@@ -3483,7 +3546,7 @@ def add_marker(request, course_id, lesson_id):
         raise Http404('You are not allowed to view this page!')
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     content_type = request.POST.get("content")
     question_type = request.POST.get("type")
     if content_type == '1':
@@ -3553,13 +3616,13 @@ def allow_special_attempt(request, user_id, course_id, quiz_id):
 
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
 
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     student = get_object_or_404(User, pk=user_id)
 
     if not course.is_enrolled(student):
-        raise Http404('The student is not enrolled for this course')
+        raise Http404('The member is not joined for this contest')
 
     micromanager, created = MicroManager.objects.get_or_create(
         course=course, student=student, quiz=quiz
@@ -3593,7 +3656,7 @@ def add_topic(request, content_type, course_id, lesson_id, toc_id=None,
         raise Http404('You are not allowed to view this page!')
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     if topic_id:
         topic = get_object_or_404(Topic, pk=topic_id)
     else:
@@ -3650,7 +3713,7 @@ def add_marker_quiz(request, content_type, course_id, lesson_id,
         raise Http404('You are not allowed to view this page!')
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     if question_id:
         question = get_object_or_404(Question, pk=question_id)
     else:
@@ -3727,7 +3790,7 @@ def revoke_special_attempt(request, micromanager_id):
     micromanager = get_object_or_404(MicroManager, pk=micromanager_id)
     course = micromanager.course
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     micromanager.revoke_special_attempt()
     msg = 'Revoked special attempt for {}'.format(
         micromanager.student.get_full_name())
@@ -3744,7 +3807,7 @@ def delete_toc(request, course_id, toc_id):
         raise Http404('You are not allowed to view this page!')
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     toc = get_object_or_404(TableOfContents, pk=toc_id)
     redirect_url = request.POST.get("redirect_url")
     if toc.content == 1:
@@ -3766,7 +3829,7 @@ def extend_time(request, paper_id):
     anspaper = get_object_or_404(AnswerPaper, pk=paper_id)
     course = anspaper.course
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
 
     if request.method == "POST":
         extra_time = float(request.POST.get('extra_time', 0))
@@ -3868,7 +3931,7 @@ def submit_marker_quiz(request, course_id, toc_id):
                     else:
                         success = False
                         msg = "You have answered the question incorrectly. "\
-                              "Please refer the lesson again"
+                              "Please refer the category again"
         else:
             msg = "You have already submitted the answer"
     else:
@@ -3886,7 +3949,7 @@ def lesson_statistics(request, course_id, lesson_id, toc_id=None):
         raise Http404('You are not allowed to view this page!')
     course = get_object_or_404(Course, pk=course_id)
     if not course.is_creator(user) and not course.is_teacher(user):
-        raise Http404('This course does not belong to you')
+        raise Http404('This contest does not belong to you')
     context = {}
     lesson = get_object_or_404(Lesson, id=lesson_id)
     data = TableOfContents.objects.get_data(course_id, lesson_id)
@@ -4006,3 +4069,6 @@ def _read_marks_csv(request, reader, course, question_paper, question_ids):
         messages.info(request,
             'Updated successfully for user: {0}, question: {1}'.format(
             username, question.summary))
+
+        
+        

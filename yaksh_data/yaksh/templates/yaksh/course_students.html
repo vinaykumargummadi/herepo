@@ -1,4 +1,8 @@
-{% if is_students %} <!--  Start if team students -->
+{% if is_students %} <!--  Start if contest students -->
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/course_students.css' %}">
+{% endblock %}
 <!-- Upload Users -->
 <div id="accordian-upload" class="card">
     <div class="card-header">
@@ -11,13 +15,13 @@
     <div class="card-body">
         <form id="upload_users" action="{% url 'yaksh:upload_users' course.id %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="input-group mb-3">
-                <div class="custom-file">
+            <div class="input-group m-0 row">
+                <div class="custom-file col-12 col-md-5">
                     <input type="file" class="custom-file-input" name="csv_file" id="upload"/>
                     <label class="custom-file-label" for="upload">Choose file</label>
                 </div>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary" type="submit">
+                <div class="input-group-append col-12 col-md-3 my-2">
+                    <button class="btn btn-custom btn-block" type="submit">
                         <i class="fa fa-upload"></i>
                         Upload
                     </button>
@@ -36,7 +40,7 @@
         </p>
         <p>
         <b> Click
-        <a class="btn btn-success" href="{% url 'yaksh:download_sample_csv' %}">
+        <a class="btn btn-custom btn-success" href="{% url 'yaksh:download_sample_csv' %}">
         here
         </a> to download a sample CSV, edit and upload it</b>
         </p>
@@ -52,7 +56,7 @@
         </a>
     </div>
 </div>
-<div id="requested" class="collapse show" data-parent="#accordion-request">
+<div id="requested" class="collapse show card-body" data-parent="#accordion-request">
     {% if requested_users %}
         <br>
         <input type="checkbox" class="checkall"/> Select all
@@ -119,7 +123,7 @@
         </a>
     </div>
 </div>
-<div id="enrolled" class="collapse hide" data-parent="#accordion-enrolled">
+<div id="enrolled" class="collapse hide card-body" data-parent="#accordion-enrolled">
     {% if enrolled_users %}
         <br>
         <input type="checkbox" class="reject"/> Select all
@@ -151,7 +155,7 @@
                             <td> {{user_profile.department}}</td>
                         {% endwith %}
                         <td>
-                            <a class="btn btn-danger" href="{% url 'yaksh:reject_enrolled_user' course.id user.id %}">
+                            <a class="btn btn-outline-danger m-1" href="{% url 'yaksh:reject_enrolled_user' course.id user.id %}">
                                 <i class="fa fa-minus-square"></i>
                                 Reject
                             </a>
@@ -160,7 +164,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <input class="btn btn-danger btn-lg" type="submit" name='reject' value='reject selected'>
+                <input class="btn btn-outline-danger btn-block" type="submit" name='reject' value='reject selected'>
                 </input>
             </form>
         </div>
@@ -181,7 +185,7 @@
         </a>
     </div>
 </div>
-<div id="rejected" class="collapse hide" data-parent="#accordion-rejected">
+<div id="rejected" class="collapse hide card-body" data-parent="#accordion-rejected">
     {% if rejected_users %}
     <br>
     <input type="checkbox" class="enroll"/> Select all
@@ -231,7 +235,25 @@
         <center>
             <span class="badge badge-warning"><big> No rejected students yet</big></span>
         </center>
-    {% endif %}  
+    {% endif %} 
+    <!-- Member Invitation block -->
+</form> 
+<br>
+</div>
+<br>
+<div id="accordian-invite" class="card">
+    <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#invite">
+            Invite Members <i class="fa fa-angle-down"></i>
+        </a>
+    </div>
+</div>
+<div id="invite" class="collapse hide card-body" data-parent="#accordion-invite">
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
 </div>
 <!-- End Rejected Students -->
 {% endif %}

@@ -1,10 +1,14 @@
 {% extends "manage.html" %}
 {% load custom_filters %}
 {% load static %}
-
+ 
 {% block title %} Grader {% endblock %}
 
 {% block pagetitle %} Grader {% endblock pagetitle %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/grade_user.css' %}">
+{% endblock %}
 
 {% block script %}
 <script type="text/javascript" src="{% static 'yaksh/js/jquery.tablesorter.min.js' %}">
@@ -46,12 +50,12 @@ function searchNames() {
               <div class="card-header">
                   <div class="row">
                       <div class="col-md-9">
-                          <h5 data-toggle="tooltip" title="{{course.name}}">
+                          <h5 data-toggle="tooltip" title="{{course.name}}" class="course-name">
                               {{ course.name }}
                           </h5>
                       </div>
                       <div class="col-md">
-                          <a class="card-link btn btn-outline-success" data-toggle="collapse" href="#collapse{{course.id}}">
+                          <a class="card-link btn btn-outline-primary btn-block btn-custom m-1" data-toggle="collapse" href="#collapse{{course.id}}">
                               Details
                               <i class="fa fa-toggle-down" id="toggle_course_{{course.id}}"></i>
                           </a>
@@ -64,18 +68,18 @@ function searchNames() {
                           {% if quizzes %}
                               <ul class="list-group">
                                 {% for quiz in quizzes %}
-                                  <li class="list-group-item">
+                                  <li class="list-group-item m-1">
                                     <div class="row">
                                       <div class="col-md-8">
                                         {{quiz.description}}
                                       </div>
                                       <div class="col-md-2">
-                                        <a href="{% url 'yaksh:monitor' quiz.id course.id%}" class="btn btn-primary">
+                                        <a href="{% url 'yaksh:monitor' quiz.id course.id%}" class="btn btn-outline-primary btn-custom btn-block m-1">
                                             Monitor
                                           </a>
                                       </div>
                                       <div class="col-md-2">
-                                        <a href="{% url 'yaksh:grade_user' quiz.id course.id%}" class="btn btn-info">
+                                        <a href="{% url 'yaksh:grade_user' quiz.id course.id%}" class="btn btn-outline-info btn-custom btn-block m-1">
                                           Grade
                                         </a>
                                       </div>
@@ -101,7 +105,7 @@ function searchNames() {
 {% elif msg == 'grade' and not objects %}
   <br>
   <div class="alert alert-info">
-    <center><h3>No teams found to grade</h3></center>
+    <center><h3>No contests found to grade</h3></center>
   </div>
 {% endif %}
 </div>
@@ -234,12 +238,12 @@ function searchNames() {
           {% with data.papers.0 as paper %}
             <div class="card">
               <div class="card-header">
-                Team Details
+                Contest Details
               </div>
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
-                    <p><b>Team:</b> {{ paper.course.name }}</p>
+                    <p><b>Contest:</b> {{ paper.course.name }}</p>
                     <p><b>Quiz:</b> {{ paper.question_paper.quiz.description }}</p>
                   </div>
                   <div class="col-md-6">
