@@ -34,10 +34,9 @@
     </div>
     {% endfor %}
     {% endif %}
-
-    <a href="{% url 'yaksh:get_course_modules' course_id %}"><button class="btn btn-outline mb-2"><i
-          class="fa fa-reply fa-2x" aria-hidden="true"></i>&nbsp;Back</button>
-    </a>
+    <a class="" href="{% url 'yaksh:get_course_modules' course_id %}">
+      <i class="fa fa-reply" aria-hidden="true"></i>&nbsp;Back
+  </a>
     <form name=frm id=frm action="" method="post" class="p-4">
       {% csrf_token %}
       <div class="cc">
