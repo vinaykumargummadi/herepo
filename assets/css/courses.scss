@@ -255,7 +255,10 @@ color: #09577A !important;
     color:#7B8C92 !important;
     font-weight: 400 !important;
 }
-
+.nav-pills .active {
+    background-color: #09577A !important;
+    color: #fff !important;
+}
 
 @media only screen and (max-width: 768px) {
     .mystepname{

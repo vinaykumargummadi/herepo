@@ -20,13 +20,7 @@
 
 .card .card-body {
   background-color: #09577A;
-  border-radius: 10%;
-}
-
-.card .card-body .form-group {
-  border-style: dashed;
-  border-color: #fff;
-  border-radius: 10%;
+  border-radius: 7%;
 }
 
 .card .card-body .form-group .btn {

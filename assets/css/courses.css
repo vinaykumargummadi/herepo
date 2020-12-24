@@ -250,22 +250,18 @@ center {
 }
 
 .avilname {
-<<<<<<< HEAD
   color: #09577A !important;
   font-weight: 500;
 }
 
 .thname {
   color: #7B8C92 !important;
-=======
-  font-size: 10px !important;
-  color: red !important;
+  font-weight: 400 !important;
 }
 
-.thname {
-  font-size: 20px !important;
->>>>>>> 00bb87f70d3a0b24ba443e5173128761ee0f9a84
-  font-weight: 400 !important;
+.nav-pills .active {
+  background-color: #09577A !important;
+  color: #fff !important;
 }
 
 @media only screen and (max-width: 768px) {
