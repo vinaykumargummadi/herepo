@@ -69,6 +69,17 @@
   top: 16.2%;
 }
 
+#dashboardSection .card-body th {
+  font-weight: 500 !important;
+  font-size: 1rem;
+  color: #09577A !important;
+}
+
+#dashboardSection .card-body td {
+  font-weight: 300;
+  font-size: 1rem;
+}
+
 .contest-card {
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
           box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
