@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,iBAAiB,CAAA;EACb,gBAAgB,ECFH,OAAO;EDGpB,KAAK,EAAE,GAAG;CACb;;AAED,AAAA,YAAY,CAAC;EACT,gBAAgB,ECRL,OAAO,CDQe,UAAU;EAC3C,KAAK,EAAE,gBAAgB;CAC1B;;AAED,AAAA,WAAW,CAAA;EACP,KAAK,EAAE,kBAAkB;EACzB,gBAAgB,EAAE,sBAAsB;EACxC,YAAY,EAAE,cAAc;EAC5B,YAAY,EAAE,kBAAkB;CACnC",
+    "sources": [
+        "monitor.scss",
+        "function.scss"
+    ],
+    "names": [],
+    "file": "monitor.css"
+}
