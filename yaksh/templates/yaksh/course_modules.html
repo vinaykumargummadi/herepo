@@ -96,11 +96,11 @@
                         
                             <div class="col-md-2 col-12 continuebtn text-center my-3">
                                 <a class="card-link" data-toggle="collapse" href="#collapse-{{module.id}}">
-                                    Details&nbsp;<i class="fa fa-angle-down"></i>
+                                    Show Quizzes&nbsp;<i class="fa fa-angle-down"></i>
                                 </a>
                             </div>
                             
-                            <div class="col-md-2 col-12 continuebtn text-center my-3">
+                            <!-- <div class="col-md-2 col-12 continuebtn text-center my-3">
                                 <a href="{% url 'yaksh:view_module' module.id course.id %}">
                                 {% get_module_status user module course as module_status %}
                                 {% if module_status == "completed" %}
@@ -118,7 +118,7 @@
                                 </div>
                                 {% endif %}
                                 </a>
-                            </div>
+                            </div> -->
                            
                     </div>
                     <div id="collapse-{{module.id}}" class="collapse hide" data-parent="#accordion-{{module.id}}">
@@ -143,6 +143,9 @@
                                         {{unit.quiz.description}}
                                     {% endif %}
                                     </td>
+<<<<<<< HEAD
+                                   
+=======
                                     <td>
                                         {% if unit.type == "lesson" %}
                                             <a href="" class="detailsbtn">
@@ -156,6 +159,7 @@
                                             {% endif %}
                                         {% endif %}
                                     </td>
+>>>>>>> 00bb87f70d3a0b24ba443e5173128761ee0f9a84
                                     <td>
                                     {% get_unit_status course module unit user as status %}
                                     {% if status == "completed" %}
@@ -182,6 +186,19 @@
                                     {% else %}
                                         ------
                                     {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if unit.type == "lesson" %}
+                                            <a href="" class="detailsbtn">
+                                                View
+                                            </a>
+                                        {% else %}
+                                            {% if unit.quiz.questionpaper_set.get %}
+                                                <a href="{% url 'yaksh:start_quiz' unit.quiz.questionpaper_set.get.id module.id course.id %}" class="detailsbtn">
+                                                    Start
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 {% endfor %}

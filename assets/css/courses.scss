@@ -247,14 +247,17 @@ color: #09577A !important;
 // .time{
 //     font-size: 16px !important;
 // }
-
 .avilname{
-    font-size: 10px !important;
-    color: red !important;
+    color: $primary-color !important;
+    font-weight: 500;
 }
 .thname{
-    font-size: 20px !important;
+    color:#7B8C92 !important;
     font-weight: 400 !important;
+}
+.nav-pills .active {
+    background-color: #09577A !important;
+    color: #fff !important;
 }
 
 @media only screen and (max-width: 768px) {
