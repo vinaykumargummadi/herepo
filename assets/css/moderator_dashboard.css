@@ -20,11 +20,68 @@
 
 .container .accordion .card {
   color: #09577A;
-  border: 1px solid #09577A;
 }
 
 .container .accordion .card .card-header {
   cursor: pointer;
   background-color: transparent;
+}
+
+.headname {
+  background-color: white !important;
+  position: relative;
+  top: 0px;
+  padding: 0px !important;
+}
+
+.headnameDashboard {
+  color: white !important;
+  background-color: #09577A !important;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.addcontest-btn {
+  background-color: #09577A !important;
+  color: white !important;
+}
+
+.details-btn {
+  background-color: #09577A !important;
+  color: white !important;
+}
+
+#dashboardSection {
+  background-color: #D4F0FC;
+  width: 98%;
+}
+
+#dashboardSection span.badge.badge-pill.badge-success {
+  position: relative;
+  top: 16.2%;
+}
+
+#dashboardSection h4 {
+  position: relative;
+  top: 16.2%;
+}
+
+#dashboardSection .card-body th {
+  font-weight: 500 !important;
+  font-size: 1rem;
+  color: #09577A !important;
+}
+
+#dashboardSection .card-body td {
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.contest-card {
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 /*# sourceMappingURL=moderator_dashboard.css.map */
