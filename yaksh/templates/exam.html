@@ -2,6 +2,7 @@
 {% load custom_filters %}
 {% load static %}
 
+
 {% block title %}{{ paper.question_paper.quiz.description }}{% endblock %}
 
 {% block nav %}
@@ -34,90 +35,92 @@
   </nav>
 </div>
 {% endblock %}
+
 {% block content %}
-<div class="container-fluid">
-  <div class="row">
-    <!-- Side Component -->
-    <div class="col-md-3 bg-secondary" style="overflow-x: scroll;">
-      <br>
-      <center>
-        <b>{{course.name}}</b><br>
-        {{ paper.question_paper.quiz.description }}</h4>
-      </center>
-      <hr>
-      <center><p><b><u>Question Navigator</b></u></p></center>
-      <br>
-      <div class="justify-content-center">
-        {% for qid in paper.get_all_ordered_questions %}
-          {% if paper.question_paper.quiz.allow_skip %}
-            {% if qid in paper.get_questions_unanswered %}
-              {% if qid.id == question.id %}
-              <a class="active btn btn-outline-primary " href="#"data-toggle="tooltip"
-                  title="{{ qid.description|striptags|truncatechars:100 }}" style="width: 50px"
-                  onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')">{{ forloop.counter }}</a>
-              {% else %}
-              <a class=" btn btn-outline-primary " href="#" data-toggle="tooltip" title="{{ qid.description|striptags|truncatechars:100 }}" style="width: 50px"
-                  onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')">{{ forloop.counter }}</a>
-              {% endif %}
-            {% endif %}
-            {% if qid in paper.get_questions_answered %}
-            <a class="btn btn-success" href="#" data-toggle="tooltip" style="width: 50px"
-            onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')"
-            title="{{ qid.description|striptags|truncatechars:100 }}">{{ forloop.counter }}</a>
-            {% endif %}
-          {% else %}
-            {% if qid.id == question.id %}
-            <a class="active btn btn-outline-primary" data-toggle="tooltip" title="{{ qid.description|striptags|truncatechars:100 }}" style="width: 50px">{{ forloop.counter }}</a>
-            {% elif qid in paper.get_questions_answered %}
-            <a class="btn btn-success" href="#" data-toggle="tooltip" style="width: 50px"
-            onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')"
-            title="{{ qid.description|striptags|truncatechars:100 }}">{{ forloop.counter }}</a>
-            {% else %}
-            <a class="btn btn-outline-primary" style="width: 50px" data-toggle="tooltip" title="{{ qid.description|striptags|truncatechars:100 }}">{{ forloop.counter }}</a>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      </div>
-      <br>
-      <p><span class="btn btn-success"></span> Attempted question(s)</p>
-      <p><span class="btn btn-primary"></span> Current question</p>
-      <p><span class="btn btn-outline-primary"></span> Unattempted question(s)</p>
-      <br>
-      <div>
-        <p class="text-center">Question(s) left: <b>{{ paper.questions_left }}</b></p>
-      </div>
-      <br>
-      <div>
-          <table class="table table-bordered table-responsive-sm">
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>Question No.</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for category, question_number in paper.get_categorized_question_indices.items %}
-              <tr>
-                <td>
-                  {{category}}
-                </td>
-                <td>
-                  {{question_number| join:", "}}
-                </td>
-              </tr>
+<!-- <section class="col-lg-12 card exam-section p-0 col-md-12"> -->
+<div class="container-fluid px-lg-5 px-md-4">
+    <div class="row exam-section">
+        <div class="col-lg-12 card-header">
+      <!-- Side Component -->
+        <div class="col-lg-12 exam-components">
+          <div class="course-title-section px-lg-5 py-lg-3 px-md-5 py-md-2">
+            <h2 class="title">{{course.name}}&nbsp;-&nbsp;</h2>
+            <h3 class="subtitle">{{ paper.question_paper.quiz.description }}</h3></h4>
+          </div>
+          <div class="row question-navigator-section align-items-center my-lg-3 mx-lg-2 m-md-2">
+            <h3 class="col-lg-3 col-md-3">Question Navigator</h3>
+            <div class="col-lg-5 col-md-9 justify-content-center">
+              {% for qid in paper.get_all_ordered_questions %}
+                {% if paper.question_paper.quiz.allow_skip %}
+                  {% if qid in paper.get_questions_unanswered %}
+                    {% if qid.id == question.id %}
+                    <a class="active btn btn-outline-primary btn-custom" href="#"data-toggle="tooltip"
+                        title="{{ qid.description|striptags|truncatechars:100 }}" style="width: 50px"
+                        onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')">{{ forloop.counter }}</a>
+                    {% else %}
+                    <a class=" btn btn-outline-primary " href="#" data-toggle="tooltip" title="{{ qid.description|striptags|truncatechars:100 }}" style="width: 50px"
+                        onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')">{{ forloop.counter }}</a>
+                    {% endif %}
+                  {% endif %}
+                  {% if qid in paper.get_questions_answered %}
+                  <a class="btn btn-success" href="#" data-toggle="tooltip" style="width: 50px"
+                  onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')"
+                  title="{{ qid.description|striptags|truncatechars:100 }}">{{ forloop.counter }}</a>
+                  {% endif %}
+                {% else %}
+                  {% if qid.id == question.id %}
+                  <a class="active btn btn-outline-primary" data-toggle="tooltip" title="{{ qid.description|striptags|truncatechars:100 }}" style="width: 50px">{{ forloop.counter }}</a>
+                  {% elif qid in paper.get_questions_answered %}
+                  <a class="btn btn-success" href="#" data-toggle="tooltip" style="width: 50px"
+                  onclick="call_skip('{{ URL_ROOT }}/exam/{{ question.id }}/skip/{{ qid.id }}/{{ paper.attempt_number }}/{{ module.id }}/{{ paper.question_paper.id }}/{{course.id}}/')"
+                  title="{{ qid.description|striptags|truncatechars:100 }}">{{ forloop.counter }}</a>
+                  {% else %}
+                  <a class="btn btn-outline-primary" style="width: 50px" data-toggle="tooltip" title="{{ qid.description|striptags|truncatechars:100 }}">{{ forloop.counter }}</a>
+                  {% endif %}
+                {% endif %}
               {% endfor %}
-            </tbody>
-          </table>
-        <br>
-      </div>
+            </div>
+            <div class="col-lg-4 col-md-12 question-status-info d-flex flex-row justify-content-between">
+              <p><span class="btn btn-success"></span> Attempted</p>
+              <p><span class="btn btn-primary"></span> Current</p>
+              <p><span class="btn btn-outline-primary"></span> Not attempted</p>
+            </div>
+            <hr class="divider">
+          </div>
+          <div class="row question-type-section mx-lg-2 mx-md-2">
+                <table class="table table-borderedless table-responsive">
+                  <!-- <thead>
+                    <tr>
+                      <th>Category</th>
+                      <th>Question No.</th>
+                    </tr>
+                  </thead> -->
+                  <tbody>
+                    {% for category, question_number in paper.get_categorized_question_indices.items %}
+                    <tr>
+                      <td>
+                        {{category}} :
+                        {{question_number| join:", "}}
+                      </td>
+                     
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-lg-3">
+              <p class="text-center">Question(s) left: <b>{{ paper.questions_left }}</b></p>
+            </div>
+          </div>
+        </div>
+        <!-- Main Component -->
+        <div class="col-lg-12 question-section px-lg-5 py-lg-4">
+          <br>
+          {% block main %}
+          {% endblock %}
+        </div>
     </div>
-    <!-- Main Component -->
-    <div class="col-md-9">
-      <br>
-      {% block main %}
-      {% endblock %}
     </div>
-  </div>
-</div>
+  <!-- </section> -->
 
 {% endblock %}

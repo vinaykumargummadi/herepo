@@ -14,6 +14,14 @@
   background-color: #09577A !important;
 }
 
+* {
+  color: red;
+}
+
+body {
+  background-color: green !important;
+}
+
 .question-active {
   color: #fff !important;
 }
@@ -30,7 +38,7 @@
 }
 
 .base-content h4 {
-  display: none;
+  display: inline;
 }
 
 .base-content .container-fluid {
