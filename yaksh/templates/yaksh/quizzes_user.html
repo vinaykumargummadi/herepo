@@ -88,7 +88,7 @@
                                     <span class="continuebtn">
                                         <a  href="{% url 'yaksh:course_modules' course.data.id %}" >
                                             Continue <i class="fas fa-angle-right"></i>
-                                        </a>
+                                        </a></span>
                                     {% else %}
                                     <span class="continuebtn">
                                         <a  href="{% url 'yaksh:course_modules' course.data.id %}">
@@ -99,9 +99,11 @@
                                     {% if course.data.active %}
                                         {% if course.data.is_active_enrollment %}
                                             {% if course.data.is_self_enroll %}
-                                                <a class="btn m-1" href="{% url 'yaksh:self_enroll' course.data.id %}">Join</a>
+                                            <span class="continuebtn">
+                                                <a class="btn m-1" href="{% url 'yaksh:self_enroll' course.data.id %}">Join</a></span>
                                             {% else %}
-                                                <a class="btn m-1" href="{% url 'yaksh:enroll_request' course.data.id %}">Join</a>
+                                            <span class="continuebtn">
+                                                <a class="btn m-1" href="{% url 'yaksh:enroll_request' course.data.id %}">Join</a></span>
                                             {% endif %}
                                         {% else %}
                                             <span class="badge badge-danger badge-pill">
