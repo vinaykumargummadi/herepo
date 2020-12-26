@@ -2,7 +2,10 @@
 {% load static %}
 
 {% block title %} Complete {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/complete.css' %}">
 
+{% endblock %}
 {% block nav %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="{% url 'yaksh:index' %}">
@@ -54,25 +57,25 @@
     <br><br>
 	<center class="container">
         <h5>
-            <span class="alert alert-success">{{message}}</span>
+            <span class="mysuccess">{{message}}</span>
         </h5>
     </center>
     <center>
     <br>
     {% if module_id and not paper.course.is_trial %}
         {% if first_unit %}
-            <a href="{% url 'yaksh:next_unit' course_id module_id learning_unit.id '1' %}" class="btn btn-info btn-lg" id="Next"> Next
+            <a href="{% url 'yaksh:next_unit' course_id module_id learning_unit.id '1' %}" class="btn mynextbtn" id="Next"> Next
                 <span class="fa fa-step-forward">
                 </span>
             </a>
         {% else %}
-            <a href="{% url 'yaksh:next_unit' course_id module_id learning_unit.id %}" class="btn btn-info btn-lg" id="Next"> Next
+            <a href="{% url 'yaksh:next_unit' course_id module_id learning_unit.id %}" class="btn mynextbtn" id="Next"> Next
                 <span class="fa fa-step-forward">
                 </span>
             </a>
         {% endif %}
     {% else %}
-        <a href="{% url 'yaksh:index' %}" id="home" class="btn btn-primary btn-lg"> Home </a>
+        <a href="{% url 'yaksh:index' %}" id="home" class="btn mynextbtn"> <i class="fas fa-home mr-2"></i>Home </a>
     {% endif %}
     </center>
 {% endblock content %}

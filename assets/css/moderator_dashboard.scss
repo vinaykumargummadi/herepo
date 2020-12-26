@@ -21,6 +21,12 @@
         }
     }
 }
+.content-bg{
+    background-color: #F4FAFF;
+    margin-left: 24px;
+    margin-right: 24px;
+    border: 1px solid $primary-color !important;
+}
 
 .headname {
     background-color: white !important;
@@ -80,3 +86,4 @@
 .contest-card {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
+
