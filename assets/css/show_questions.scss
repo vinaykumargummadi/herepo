@@ -1,12 +1,12 @@
 @import 'function.scss';
 @include button-border;
 @include button-colors;
-*{
-    color: red;
-}
-body{
-    background-color: green!important;
-}
+// *{
+//     color: red;
+// }
+// body{
+//     background-color: green!important;
+// }
 .question-active{ 
     color: $font-color!important;
 }

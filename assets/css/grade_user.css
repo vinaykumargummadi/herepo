@@ -71,7 +71,8 @@
 }
 
 .graderSection {
-  background-color: #D4F0FC;
+  background-color: #F4FAFF;
+  border: 1px solid #09577A !important;
   width: 95%;
 }
 
