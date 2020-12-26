@@ -1,2 +1,5 @@
 @import 'function.scss';
 @include button-colors;
+.btn-outline-success{
+    border-width: 1px!important;
+}
