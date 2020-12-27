@@ -7,10 +7,13 @@
 {% endblock %}
 {% block main %}
 <html>
-    <hr>
-    <div class="row">
-        <div class="col-md-8">
-            <ul class="nav nav-pills d-flex justify-content-center" id="course_tabs">
+   
+    <div class="contentbg py-4 mx-1 mx-md-4">
+        
+         
+    <div class="row mx-4 mt-3 mt-md-5">
+        <div class="col-md-12">
+            <ul class="nav nav-pills" id="course_tabs">
                 <li class="nav-item">
                     <a class="nav-link m-1" href="{% url 'yaksh:courses' %}">
                         My Courses
@@ -29,29 +32,37 @@
             </ul>
         </div>
     </div>
-    <hr>
-    <a href="{% url 'grades:add_grade' %}" class="btn btn-lg btn-outline-success m-1">
-        <span class=" fa fa-plus-circle"></span>&nbsp;Add a Grading System
-    </a>
-    <br><br>
-    <b> Available Grading Systems: </b>
-    <table class="table table-responsive-sm">
+    <div class="row container-fluid my-4 mt-5">
+       
+        <div class="col-md-6"> <p class="avilname ml-3"> Available Grading Systems: </p></div>
+        <div class="col-md-6">
+            <span class="float-right">
+            <a href="{% url 'grades:add_grade' %}" class="btn myaddbtn">
+                <span class=" fa fa-plus-circle"></span>&nbsp;Add a Grading System
+            </a>
+        </span>
+        </div>
+    </div>
+   
+  
+   
+    <table class="table table-responsive-sm table-striped ">
         <tr>
-            <th>Grading System</th>
-            <th>Grading Ranges</th>
+            <th class="thname">Grading System</th>
+            <th class="thname">Grading Ranges</th>
         </tr>
         <tr>
             <td>
             <a href="{% url 'grades:edit_grade' default_grading_system.id %}">
-            {{ default_grading_system.name }}</a> (<b>Default Grading System</b>)
+            {{ default_grading_system.name }}</a> (<b class="thname">Default Grading System</b>)
             </td>
             <td>
                 <table class="table">
                     <tr>
-                        <th>Lower Limit</th>
-                        <th>Upper Limit</th>
-                        <th>Grade</th>
-                        <th>Description</th>
+                        <th  class="thname">Lower Limit</th>
+                        <th  class="thname">Upper Limit</th>
+                        <th class="thname">Grade</th>
+                        <th  class="thname">Description</th>
                     </tr>
                     {% for range in default_grading_system.graderange_set.all %}
                         <tr>
@@ -75,12 +86,12 @@
             <a href="{% url 'grades:edit_grade' system.id %}">{{ system.name }}</a>
             </td>
             <td>
-                <table class="table">
+                <table class="table table-striped">
                     <tr>
-                        <th>Lower Limit</th>
-                        <th>Upper Limit</th>
-                        <th>Grade</th>
-                        <th>Description</th>
+                        <th  class="thname">Lower Limit</th>
+                        <th  class="thname">Upper Limit</th>
+                        <th  class="thname">Grade</th>
+                        <th  class="thname">Description</th>
                     </tr>
                     {% for range in system.graderange_set.all %}
                         <tr>
@@ -100,5 +111,8 @@
         {% endfor %}
     </table>
     {% endif %}
+    
+    </div>
+    
 </html>
 {% endblock %}

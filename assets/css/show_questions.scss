@@ -1,17 +1,11 @@
 @import 'function.scss';
 @include button-border;
 @include button-colors;
-*{
-    color: red;
-}
-body{
-    background-color: green!important;
-}
 .question-active{ 
     color: $font-color!important;
-}
+} 
 .base-content{
-    margin: 50px 50px;
+    margin: 20px 50px;
     .header{
         background-color: $primary-color;
         color: $font-color;
@@ -21,7 +15,7 @@ body{
     h4{
         display: inline;
     }
-    .container-fluid{
+    .backdrop{
         background-color: $backdrop-color;
         border-bottom: 1px solid $primary-color;
         border-left: 1px solid $primary-color;
@@ -89,9 +83,19 @@ body{
         }
     }
     .upload-questions{
+        .upload-questions-head{
+            color: $exam-card-header;
+        }
         .card-body{
             li{
+                color: $inactive-color;
                 list-style-type: none;
+                b{
+                    color: $primary-color;
+                }
+                pre{
+                    color: $inactive-color;
+                }
             }
             .or-section{
                 color: $primary-color;
@@ -135,4 +139,11 @@ body{
             }
         }
     }
+}
+
+// Card header styling 
+.headname{
+    padding: 0px !important;
+    position: relative;
+    top: 0 !important;
 }

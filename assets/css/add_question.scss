@@ -1,0 +1,23 @@
+@import 'function.scss';
+@include button-colors;
+@include button-border;
+
+.custom{
+    background-color: #F4FAFF;
+    // margin-left: 40px;
+    // margin-right: 40px;
+    padding-top: 50px;
+    padding-bottom: 80px;
+ 
+    border: 1px solid $primary-color;
+}
+
+#submit{
+    border-radius: 20px;
+   background-color: green;
+}
+
+.back{
+    text-decoration: none;
+   
+}

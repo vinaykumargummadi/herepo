@@ -1,7 +1,7 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect,render
 
 from .settings import URL_ROOT
 
 
 def index(request):
-    return redirect('{0}/exam/'.format(URL_ROOT))
+    return render(request,'landing.html')

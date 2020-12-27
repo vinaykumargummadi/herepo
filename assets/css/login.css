@@ -20,13 +20,7 @@
 
 .card .card-body {
   background-color: #09577A;
-  border-radius: 10%;
-}
-
-.card .card-body .form-group {
-  border-style: dashed;
-  border-color: #fff;
-  border-radius: 10%;
+  border-radius: 7%;
 }
 
 .card .card-body .form-group .btn {
@@ -57,5 +51,15 @@
 
 .card .card-body .form-group .divider {
   border-color: #D4F0FC !important;
+}
+
+.headname {
+  color: white !important;
+  background-color: white;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 /*# sourceMappingURL=login.css.map */

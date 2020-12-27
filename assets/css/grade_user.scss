@@ -4,9 +4,10 @@
     color: $font-color!important;
 } 
 .card{
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
     .card-header{
         background: transparent;
-        border: 1px solid $primary-color;
+        // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         @include button-border;
         @include button-colors;
         .course-name{
@@ -14,7 +15,6 @@
         }
     }
     .card-body{
-        border: 1px solid $primary-color;
         border-top: transparent;
         @include button-colors;
         .list-group-item{
@@ -31,4 +31,18 @@
             }
         }
     }
+}
+
+// Grader styling 
+.graderSection{
+    background-color: $secondary-color;
+    width: 94%;
+    .card{
+        border: none !important;
+        .details-btn {
+            background-color: $primary-color !important;
+            color: white !important;
+        }
+    }
+    
 }

@@ -6,7 +6,7 @@
 }
 
 .btn-custom:hover {
-  color: #fff !important;
+  color: #D4F0FC !important;
   background-color: #09577A !important;
 }
 
@@ -14,9 +14,13 @@
   color: #fff !important;
 }
 
+.card {
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
 .card .card-header {
   background: transparent;
-  border: 1px solid #09577A;
 }
 
 .card .card-header .btn {
@@ -31,7 +35,7 @@
 }
 
 .card .card-header .btn-custom:hover {
-  color: #fff !important;
+  color: #D4F0FC !important;
   background-color: #09577A !important;
 }
 
@@ -40,7 +44,6 @@
 }
 
 .card .card-body {
-  border: 1px solid #09577A;
   border-top: transparent;
 }
 
@@ -52,7 +55,7 @@
 }
 
 .card .card-body .btn-custom:hover {
-  color: #fff !important;
+  color: #D4F0FC !important;
   background-color: #09577A !important;
 }
 
@@ -65,5 +68,19 @@
     text-align: center;
     word-break: break-all;
   }
+}
+
+.graderSection {
+  background-color: #D4F0FC;
+  width: 94%;
+}
+
+.graderSection .card {
+  border: none !important;
+}
+
+.graderSection .card .details-btn {
+  background-color: #09577A !important;
+  color: white !important;
 }
 /*# sourceMappingURL=grade_user.css.map */

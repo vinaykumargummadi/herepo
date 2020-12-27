@@ -17,12 +17,11 @@
     }
     .card-body{
         background-color: $primary-color;
-        border-radius: 10%;
+        border-radius: 7%;
         // padding: 30px;
         .form-group{
-            border-style: dashed;
-            border-color: $font-color;
-            border-radius: 10%;
+            
+            
             @include login-button;
             .login-btn{
                 border-width: 1px!important;
@@ -42,4 +41,14 @@
             }
         }
     }
+}
+
+.headname{
+    color:white !important;
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    top:20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }

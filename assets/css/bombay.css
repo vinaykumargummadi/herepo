@@ -6,8 +6,25 @@
   color: #09577A;
 }
 
-.navbar {
-  background-color: #09577A !important;
+#manageNavbar {
+  background-color: white !important;
+}
+
+#manageNavbar .navbar-brand {
+  color: #24577A !important;
+}
+
+#manageNavbar .nav-link {
+  color: #24577A !important;
+}
+
+#manageNavbar .fa-chevron-circle-down {
+  font-size: 14px;
+}
+
+#manageNavbar .navbar {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 .title {
@@ -17,6 +34,9 @@
 .exam-section {
   background-color: #F4FAFF;
   border-radius: 40px 40px 0px 0px;
+  border: 1px solid #09577A;
+  width: 94%;
+  margin: 0 auto;
 }
 
 .exam-section .card-header {
@@ -25,6 +45,7 @@
 }
 
 .exam-section .exam-components {
+  border-bottom: 1px solid #09577A;
   padding: 0;
 }
 
@@ -57,13 +78,18 @@
   border-color: #09577A;
 }
 
+.exam-section .exam-components .question-type-section th {
+  border: 1px solid #85A5C2;
+}
+
 .exam-section .exam-components .question-type-section td {
-  border: none;
+  border: 1px solid #85A5C2;
 }
 
 .exam-section .question-section .card {
   -webkit-box-shadow: 0px 0px 30px 0px #0000001A;
           box-shadow: 0px 0px 30px 0px #0000001A;
+  border: 1px solid #707070 !important;
 }
 
 .exam-section .question-section .card .card-header {
@@ -86,5 +112,15 @@
 
 .exam-section .question-section .card .card-header div small {
   margin: 1%;
+}
+
+.headname {
+  color: white !important;
+  background-color: #09577A;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 /*# sourceMappingURL=bombay.css.map */

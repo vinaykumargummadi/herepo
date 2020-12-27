@@ -1,3 +1,18 @@
+{% block style %}
+    <style>
+        .pagination .page-item .page-link{
+            border: 1px solid #007CC7;            
+            background-color: transparent;
+            color: #007CC7;
+            border-width: 1px;
+        }
+        .pagination .page-item .page-link:hover{
+            background-color: #007CC7;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
 <ul class="pagination pagination">
     {% if objects.has_previous %}
     <li class="page-item">

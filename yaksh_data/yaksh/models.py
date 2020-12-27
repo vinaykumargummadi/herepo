@@ -923,9 +923,9 @@ class Course(models.Model):
 
     def create_demo(self, user):
         course = Course.objects.filter(creator=user,
-                                       name="Halo Test Team 1").exists()
+                                       name="Halo Test Contest 1").exists()
         if not course:
-            course = Course.objects.create(name="Halo Test Team 1",
+            course = Course.objects.create(name="Halo Test Contest 1",
                                            enrollment="open",
                                            creator=user)
             quiz = Quiz()

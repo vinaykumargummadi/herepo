@@ -14,20 +14,12 @@
   background-color: #09577A !important;
 }
 
-* {
-  color: red;
-}
-
-body {
-  background-color: green !important;
-}
-
 .question-active {
   color: #fff !important;
 }
 
 .base-content {
-  margin: 50px 50px;
+  margin: 20px 50px;
 }
 
 .base-content .header {
@@ -41,7 +33,7 @@ body {
   display: inline;
 }
 
-.base-content .container-fluid {
+.base-content .backdrop {
   background-color: #F4FAFF;
   border-bottom: 1px solid #09577A;
   border-left: 1px solid #09577A;
@@ -116,8 +108,21 @@ body {
   background-color: #D4F0FC;
 }
 
+.tab-content .upload-questions .upload-questions-head {
+  color: #59748A;
+}
+
 .tab-content .upload-questions .card-body li {
+  color: #85A5C2;
   list-style-type: none;
+}
+
+.tab-content .upload-questions .card-body li b {
+  color: #09577A;
+}
+
+.tab-content .upload-questions .card-body li pre {
+  color: #85A5C2;
 }
 
 .tab-content .upload-questions .card-body .or-section {
@@ -154,5 +159,11 @@ body {
     font-size: 0.7em;
     word-break: break-all;
   }
+}
+
+.headname {
+  padding: 0px !important;
+  position: relative;
+  top: 0 !important;
 }
 /*# sourceMappingURL=show_questions.css.map */

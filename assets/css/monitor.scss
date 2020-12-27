@@ -1,0 +1,18 @@
+@import 'function.scss';
+
+#monitorDashboard{
+    background-color: $secondary-color;
+    width: 95%;
+}
+
+.details-btn {
+    background-color: $primary-color !important;
+    color: white !important;
+}
+
+.btn-custom{
+    color: #09577A !important;
+    background-color: transparent !important;
+    border-width: 1px !important;
+    border-color: #09577A !important;
+}
