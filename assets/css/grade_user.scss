@@ -35,9 +35,8 @@
 
 // Grader styling 
 .graderSection{
-    background-color: $backdrop-color;
-    border: 1px solid $primary-color !important;
-    width: 95%;
+    background-color: $secondary-color;
+    width: 94%;
     .card{
         border: none !important;
         .details-btn {

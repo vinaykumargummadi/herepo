@@ -33,7 +33,8 @@
   display: inline;
 }
 
-.base-content .container-fluid {
+.base-content .backdrop {
+  background-color: #F4FAFF;
   border-bottom: 1px solid #09577A;
   border-left: 1px solid #09577A;
   border-right: 1px solid #09577A;
@@ -107,8 +108,21 @@
   background-color: #D4F0FC;
 }
 
+.tab-content .upload-questions .upload-questions-head {
+  color: #59748A;
+}
+
 .tab-content .upload-questions .card-body li {
+  color: #85A5C2;
   list-style-type: none;
+}
+
+.tab-content .upload-questions .card-body li b {
+  color: #09577A;
+}
+
+.tab-content .upload-questions .card-body li pre {
+  color: #85A5C2;
 }
 
 .tab-content .upload-questions .card-body .or-section {

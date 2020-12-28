@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container-fluid p-lg-5 py-5">
+  <div class="container-fluid p-lg-5 py-5 backdrop">
     <div class="nav nav-pills d-flex justify-content-left" role="tablist" aria-orientation="vertical">
       <a href="#show" id="showbar" class="nav-link m-1 active"  data-toggle="pill" role="tab" aria-controls="show" aria-selected="true"> All Questions</a>
       <a href="#updown" id="updownbar" class="nav-link m-1" data-toggle="pill" role="tab" aria-controls="updown" aria-selected="false" > Upload Questions</a>
@@ -25,13 +25,15 @@
     <br>
     <div class="tab-content">
       <!-- Upload Questions -->
+      
       <div id="updown" class="card tab-pane fade upload-questions" role="tabpanel" aria-labelledby="updownbar">
         <div class="card-body">
           <form action="" method="post"  enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
+                <p class="upload-questions-head">You can upload question files the following ways -</p>
                 <div class="col" role="alert">
-                  <p>You can upload question files the following ways -
+                  <p>
                     <li><b>Yaml File</b>
                       <p>One can upload Yaml file with extensions .yaml or .yml. Please note
                         that you cannot upload files associated to a question. Yaml file can
