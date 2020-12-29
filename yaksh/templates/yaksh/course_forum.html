@@ -13,7 +13,7 @@
     {% include "yaksh/sidebar.html" %}
     <div class="container-fluid bg">
         <div class="container" id="page-content-wrapper">
-            <div>
+            <div class="p-5">
                 <h2>
                     <center>{{course.name}}</center>
                 </h2>
@@ -32,7 +32,8 @@
                     {% endif %}
                 </div>
                 <div class="col-md">
-                    <button type="button" class="btn  pull-right" data-toggle="modal" data-target="#newPostModal">
+                    <button type="button" id="new" class="btn  pull-right" data-toggle="modal"
+                        data-target="#newPostModal">
                         <i class="fa fa-plus"></i>&nbsp;New Post
                     </button>
                 </div>

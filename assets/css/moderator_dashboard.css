@@ -27,6 +27,13 @@
   background-color: transparent;
 }
 
+.content-bg {
+  background-color: #F4FAFF;
+  margin-left: 24px;
+  margin-right: 24px;
+  border: 1px solid #09577A !important;
+}
+
 .headname {
   background-color: white !important;
   position: relative;
@@ -55,7 +62,8 @@
 }
 
 #dashboardSection {
-  background-color: #D4F0FC;
+  background-color: #F4FAFF;
+  border: 1px solid #09577A !important;
   width: 98%;
 }
 

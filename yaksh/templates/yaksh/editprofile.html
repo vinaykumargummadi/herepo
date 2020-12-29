@@ -1,12 +1,15 @@
 {% extends template  %}
 {% block title %} Edit Profile {% endblock %}
 {% block pagetitle %} My Profile {% endblock %}
+
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/editprofile.css' %}">
 {% endblock %}
 {% block main %}
-<div class="container">
+<div class="container-fluid">
+    <div class="contentbg">
+        <div class="py-4 mx-1 mx-md-4 my-5">
     <br>
     <form action="{% url 'yaksh:edit_profile'%}" method="post" >
       {% csrf_token %}
@@ -42,12 +45,16 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="row d-flex justify-content-center m-3">
-                    <button class="btn btn-outline-success btn-lg col-lg-4" type="submit">Update</button>&nbsp;&nbsp;
-                    <a href="{% url 'yaksh:index' %}" class="btn btn-outline-primary btn-custom btn-lg col-lg-4">Cancel</a>
+                <div class="row float-left m-3">
+                    <button class="btn myaddbtn" type="submit">Update</button>&nbsp;&nbsp;
+                    <a href="{% url 'yaksh:index' %}" class="btn mynextbtn">Cancel</a>
                 </div>
                 </form>
+                <br>
+                <br>
     </center>
     </form>
+    </div>
+    </div>
 </div>
 {% endblock main %}

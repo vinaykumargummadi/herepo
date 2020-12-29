@@ -18,4 +18,11 @@
 .jumbotron .display-4 {
   color: #09577A;
 }
+
+.contentbg {
+  background-color: #F4FAFF;
+  margin-left: 39px !important;
+  margin-right: 39px !important;
+  border: 1px solid #09577A !important;
+}
 /*# sourceMappingURL=course_detail.css.map */

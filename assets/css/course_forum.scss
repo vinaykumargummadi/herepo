@@ -18,7 +18,8 @@
 .clear{
     color: red;
     background: none;
-    border-radius: 20px;
+    border-radius: 10px;
+    border: 1px solid red;
 }
  .bg{
     background-color: #F4FAFF;
@@ -63,5 +64,9 @@
     .comment-txt{
         color: #08577A;
     }
+ }
+
+ #new{
+     color: $primary-color;
  }
 
