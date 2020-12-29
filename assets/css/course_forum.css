@@ -16,7 +16,8 @@
 .clear {
   color: red;
   background: none;
-  border-radius: 20px;
+  border-radius: 10px;
+  border: 1px solid red;
 }
 
 .bg {
@@ -50,5 +51,9 @@
 
 .comment .comment-txt {
   color: #08577A;
+}
+
+#new {
+  color: #09577A;
 }
 /*# sourceMappingURL=course_forum.css.map */
