@@ -25,12 +25,22 @@
 }
 
 .bat {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 #add_category {
   background-color: #09577A;
   border-radius: 20px;
+}
+
+.headname {
+  color: white !important;
+  background-color: #09577A !important;
+  padding: 20px;
+  position: relative;
+  top: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 @media screen and (max-width: 520px) {

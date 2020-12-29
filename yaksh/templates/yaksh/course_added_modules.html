@@ -1,4 +1,5 @@
 {% load static %}
+
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/course_added_modules.css' %}">
 {% endblock %}
@@ -6,10 +7,15 @@
 <div class="">
     {% if is_modules %}
     {% block pagetitle %} <center>
-        <h3>Contest Categories</h3>
+        <h2 class="my-2">Contest Categories</h2>
     </center> {% endblock %}
-    <a href="{% url 'yaksh:add_module' course.id %}"><button class="btn btn-lg text-white" id="add_category"><i class="fa fa-plus-circle"></i>&nbsp;Add Category</button></a>
-   
+    <br>
+    <div class="float-right mr-3">
+        <a href="{% url 'yaksh:add_module' course.id %}"><button class="btn btn-lg text-white" id="add_category"><i
+                    class="fa fa-plus-circle"></i>&nbsp;Add Category</button></a>
+    </div>
+
+    <br>
     <br><br>
     {% if modules %}
     <center>
@@ -30,7 +36,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <a href="{% url 'yaksh:add_quiz' course.id module.id %}"><button class="btn btn-success bat btn-lg">
+                        <a href="{% url 'yaksh:add_quiz' course.id module.id %}"><button
+                                class="btn btn-success bat btn-lg">
                                 <i class="fa fa-plus-circle"></i>&nbsp;Add Quiz</button>
                         </a>
 
