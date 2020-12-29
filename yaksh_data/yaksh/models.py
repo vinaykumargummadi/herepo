@@ -420,6 +420,8 @@ class Quiz(models.Model):
 
     weightage = models.FloatField(help_text='Will be considered as percentage',
                                   default=100)
+    negative_weightage = models.FloatField(help_text='Will be considered as Negative percentage per question',
+                                    default=100)
 
     is_exercise = models.BooleanField(default=False)
 
@@ -2221,16 +2223,31 @@ class AnswerPaper(models.Model):
     def _update_marks_obtained(self):
         """Updates the total marks earned by student for this paper."""
         marks = 0
+        print("marks before", marks)
+        print(self.questions.all())
+        print(self.questions)
+        def neg(m):
+            if m==0:
+                qp = QuestionPaper.objects.get(id = self.question_paper.id)
+                print(qp.quiz.negative_weightage)
+                print(question)
+                return question.points*(-qp.quiz.negative_weightage)/100
+            else:
+                return 0.0
+
         for question in self.questions.all():
-            marks_list = [a.marks
+            marks_list = [a.marks+neg(a.marks)
                           for a in self.answers.filter(question=question)]
+            print('marks list-------',marks_list)
             max_marks = max(marks_list) if marks_list else 0.0
+            
             marks += max_marks
         self.marks_obtained = marks
 
     def _update_percent(self):
         """Updates the percent gained by the student for this paper."""
         total_marks = self.question_paper.total_marks
+        print(total_marks)
         if self.marks_obtained is not None:
             percent = self.marks_obtained/total_marks*100
             self.percent = round(percent, 2)
@@ -2377,6 +2394,7 @@ class AnswerPaper(models.Model):
                 if int(user_answer) in expected_answers:
                     result['success'] = True
                     result['error'] = ['Correct answer']
+                print('integer result------',result)
 
             elif question.type == 'string':
                 tc_status = []
@@ -2418,6 +2436,7 @@ class AnswerPaper(models.Model):
                 url = '{0}:{1}'.format(SERVER_HOST_NAME, server_port)
                 submit(url, uid, json_data, user_dir)
                 result = {'uid': uid, 'status': 'running'}
+                print('code result',result)
         return result
 
     def regrade(self, question_id, server_port=SERVER_POOL_PORT):

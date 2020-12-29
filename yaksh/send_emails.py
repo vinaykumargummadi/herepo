@@ -91,7 +91,16 @@ def send_bulk_mail(subject, email_body, recipients, attachments):
 
 def send_invite(subject,username,password,to):
     try:
-        message = """Hi {} ur pwd is {}""".format(username,password)
+        message = """Hi {}, your password is {}""".format(username,password)
+        send_mail(subject,message,settings.SENDER_EMAIL,to)
+    except:
+        message = "Check ur email"
+
+    return message
+
+def send_invite(subject,to):
+    try:
+        message = """Hi {}, you enrolled in new course """.format(to)
         send_mail(subject,message,settings.SENDER_EMAIL,to)
     except:
         message = "Check ur email"

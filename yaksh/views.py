@@ -62,6 +62,9 @@ import string
 from django.conf import settings
 from textwrap import dedent
 from .send_emails import send_invite
+from django.core.exceptions import ValidationError
+from django import forms
+
 
 def my_redirect(url):
     """An overridden redirect to deal with URL_ROOT-ing. See settings.py
@@ -917,6 +920,7 @@ def check(request, q_id, attempt_num=None, questionpaper_id=None,
                 result_details = get_result_from_code_server(url, uid,
                                                              block=True)
                 result = json.loads(result_details.get('result'))
+                print('u r result-------',result)
                 next_question, error_message, paper = _update_paper(
                     request, uid, result)
                 return show_question(request, next_question, paper,
@@ -2569,6 +2573,11 @@ def _get_csv_values(row, fields):
         username = row['username'].strip()
     if 'remove' in fields:
         remove = row['remove']
+    print("starting for loop")
+    e = email.split(",")
+    for i in e:
+        send_invite("Invite",username,password,[i])
+    print("end of for loop")
     return (username, email, first_name, last_name, password,
             roll_no, institute, department, remove)
 
@@ -3276,32 +3285,61 @@ def course_students(request, course_id):
         form = InviteForm(request.POST)
         if form.is_valid():
             e = form.cleaned_data['email']
+
             email = e.split(',')
             print('----user email is',email)
             
-            for i in email:
-                username = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
-                print('------username',username)
-                password = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
-                print('-----password is',password)
 
-                user = User.objects.create_user(username = username, email = i, password = password)
-                print('-----created user is', user)
-                user.save()
-                print('--------user saved')
+            for i in email:
+                print('user------true',User.objects.filter(email=i).exists())
+                print('course--------false',Course.objects.filter(students__in = User.objects.filter(email = i)).filter(id = course_id).exists())
+                print('it need to be True',User.objects.filter(email=i).exists() and not Course.objects.filter(students__in = User.objects.filter(email = i)).filter(id = course_id).exists())
+                if User.objects.filter(email=i).exists() and Course.objects.filter(students__in = User.objects.filter(email = i)).filter(id = course_id).exists():
+                    messages.success(
+                        request,
+                        "{} is already enrolled in course".format(i)
+                        )
+                elif User.objects.filter(email=i).exists() and not Course.objects.filter(students__in = User.objects.filter(email = i)).filter(id = course_id).exists():
+                    course = get_object_or_404(Course, pk=course_id)
+                    print('----course-----',course)
+                    print('True or False',course.is_self_enroll())
+                    print('----enrolling user is', user)
+                    user = User.objects.get(email=i).id
+                    print(user)
+                    asdf = send_invite("Invite",[i])
+                    course = get_object_or_404(Course, pk=course_id)
+                    if course.is_self_enroll():
+                        was_rejected = False
+                        course.enroll(was_rejected, user)
+                    messages.success(
+                            request,
+                            "Joined Successfully in {0} by {1}".format(
+                            course.name, course.creator.get_full_name()
+                            )
+                    )
+                else:
+                    username = i
+                    print('------username',username)
+                    password = i
+                    print('-----password is',password)
+
+                    user = User.objects.create_user(username = username, email = i, password = password)
+                    print('-----created user is', user)
+                    user.save()
+                    print('--------user saved')
             
-                asdf = send_invite("Invite",username,password,[i])
-                course = get_object_or_404(Course, pk=course_id)
-                print('----course-----',course)
-                print('True or False',course.is_self_enroll())
-                print('----enrolling user is', user)
-                course = get_object_or_404(Course, pk=course_id)
-                if course.is_self_enroll():
-                    was_rejected = False
-                    course.enroll(was_rejected, user)
-                messages.success(
-                    request,
-                    "Joined Successfully in {0} by {1}".format(
+                    asdf = send_invite("Invite",username,password,[i])
+                    course = get_object_or_404(Course, pk=course_id)
+                    print('----course-----',course)
+                    print('True or False',course.is_self_enroll())
+                    print('----enrolling user is', user)
+                    course = get_object_or_404(Course, pk=course_id)
+                    if course.is_self_enroll():
+                        was_rejected = False
+                        course.enroll(was_rejected, user)
+                    messages.success(
+                        request,
+                        "Joined Successfully in {0} by {1}".format(
                         course.name, course.creator.get_full_name()
                         )
                 )
