@@ -30,7 +30,7 @@ def send_user_mail(user_mail, key):
     """
     try:
         to = user_mail
-        subject = 'Yaksh Email Verification'
+        subject = 'HALO Email Verification'
         message = dedent("""\
                 To activate your account and verify your email address,
                 please click the following link:
@@ -86,5 +86,23 @@ def send_bulk_mail(subject, email_body, recipients, attachments):
         message = """Error: {0}. Please check email address.\
                 If email address is correct then
                 Please contact {1}.""".format(exc_msg, settings.REPLY_EMAIL)
+
+    return message
+
+def send_invite(subject,username,password,to):
+    try:
+        message = """Hi {}, your password is {}""".format(username,password)
+        send_mail(subject,message,settings.SENDER_EMAIL,to)
+    except:
+        message = "Check ur email"
+
+    return message
+
+def send_invite(subject,to):
+    try:
+        message = """Hi {}, you enrolled in new course """.format(to)
+        send_mail(subject,message,settings.SENDER_EMAIL,to)
+    except:
+        message = "Check ur email"
 
     return message

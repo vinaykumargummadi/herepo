@@ -1,7 +1,7 @@
 from django import forms
 from yaksh.models import (
     get_model_class, Profile, Quiz, Question, Course, QuestionPaper, LearningModule, TestCase, languages, question_types, Post, Comment,
-    Topic
+    Topic, Invite
 )
 from grades.models import GradingSystem
 from django.contrib.auth import authenticate
@@ -678,3 +678,8 @@ class VideoQuizForm(forms.ModelForm):
                     "Marker time should be in the format hh:mm:ss"
                 )
         return timer
+
+class InviteForm(forms.ModelForm):
+    class Meta:
+        model = Invite
+        fields = ['email']

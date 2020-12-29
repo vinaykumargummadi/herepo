@@ -273,7 +273,7 @@ class CourseManager(models.Manager):
 
     def create_trial_course(self, user):
         """Creates a trial course for testing questions"""
-        trial_course = self.create(name="trial_course", enrollment="open",
+        trial_course = self.create(name="trial_contest", enrollment="open",
                                    creator=user, is_trial=True)
         trial_course.enroll(False, user)
         return trial_course
@@ -302,7 +302,7 @@ class QuizManager(models.Manager):
     def create_trial_from_quiz(self, original_quiz_id, user, godmode,
                                course_id):
         """Creates a trial quiz from existing quiz"""
-        trial_course_name = "Trial_course_for_course_{0}_{1}".format(
+        trial_course_name = "Trial_contest_for_contest_{0}_{1}".format(
             course_id, "godmode" if godmode else "usermode")
         trial_quiz_name = "Trial_orig_id_{0}_{1}".format(
             original_quiz_id,
@@ -409,17 +409,19 @@ class Quiz(models.Model):
 
     is_trial = models.BooleanField(default=False)
 
-    instructions = models.TextField('Instructions for Students',
+    instructions = models.TextField('Instructions for Members',
                                     default=None, blank=True, null=True)
 
-    view_answerpaper = models.BooleanField('Allow student to view their answer\
+    view_answerpaper = models.BooleanField('Allow member to view their answer\
                                             paper', default=False)
 
-    allow_skip = models.BooleanField("Allow students to skip questions",
+    allow_skip = models.BooleanField("Allow members to skip questions",
                                      default=True)
 
     weightage = models.FloatField(help_text='Will be considered as percentage',
                                   default=100)
+    negative_weightage = models.FloatField(help_text='Will be considered as Negative percentage per question',
+                                    default=100)
 
     is_exercise = models.BooleanField(default=False)
 
@@ -524,7 +526,7 @@ class Quiz(models.Model):
             course_name, module_name, quiz_name
             ))
         unit_file_path = os.sep.join((
-            path, "templates", "yaksh", "download_course_templates",
+            path, "templates", "yaksh", "download_contest_templates",
             "quiz.html"
             ))
         quiz_data = {"course": course, "module": module,
@@ -784,7 +786,7 @@ class LearningModule(models.Model):
                                            path)
 
         module_file_path = os.sep.join((
-            path, "templates", "yaksh", "download_course_templates",
+            path, "templates", "yaksh", "download_contest_templates",
             "module.html"
             ))
         module_data = {"course": course, "module": self, "units": units}
@@ -827,14 +829,14 @@ class Course(models.Model):
 
     # The start date of the course enrollment.
     start_enroll_time = models.DateTimeField(
-        "Start Date and Time for enrollment of course",
+        "Start Date and Time for enrollment of contest",
         default=timezone.now,
         null=True
     )
 
     # The end date and time of the course enrollment
     end_enroll_time = models.DateTimeField(
-        "End Date and Time for enrollment of course",
+        "End Date and Time for enrollment of contest",
         default=datetime(
             2199, 1, 1,
             tzinfo=pytz.timezone(timezone.get_current_timezone_name())
@@ -1088,7 +1090,7 @@ class Course(models.Model):
             file_path = os.sep.join(
                 (
                     path, "templates", "yaksh",
-                    "download_course_templates", "index.html"
+                    "download_contest_templates", "index.html"
                 )
             )
             write_static_files_to_zip(zip_file, course_name, path,
@@ -1273,7 +1275,7 @@ class Question(models.Model):
     # Check assignment upload based question
     grade_assignment_upload = models.BooleanField(default=False)
 
-    min_time = models.IntegerField("time in minutes", default=0)
+    min_time = models.IntegerField("Time in minutes for Exercise", default=0)
 
     # Solution for the question.
     solution = models.TextField(blank=True)
@@ -2221,16 +2223,31 @@ class AnswerPaper(models.Model):
     def _update_marks_obtained(self):
         """Updates the total marks earned by student for this paper."""
         marks = 0
+        print("marks before", marks)
+        print(self.questions.all())
+        print(self.questions)
+        def neg(m):
+            if m==0:
+                qp = QuestionPaper.objects.get(id = self.question_paper.id)
+                print(qp.quiz.negative_weightage)
+                print(question)
+                return question.points*(-qp.quiz.negative_weightage)/100
+            else:
+                return 0.0
+
         for question in self.questions.all():
-            marks_list = [a.marks
+            marks_list = [a.marks+neg(a.marks)
                           for a in self.answers.filter(question=question)]
+            print('marks list-------',marks_list)
             max_marks = max(marks_list) if marks_list else 0.0
+            
             marks += max_marks
         self.marks_obtained = marks
 
     def _update_percent(self):
         """Updates the percent gained by the student for this paper."""
         total_marks = self.question_paper.total_marks
+        print(total_marks)
         if self.marks_obtained is not None:
             percent = self.marks_obtained/total_marks*100
             self.percent = round(percent, 2)
@@ -2343,6 +2360,7 @@ class AnswerPaper(models.Model):
 
     def validate_answer(self, user_answer, question, json_data=None, uid=None,
                         server_port=SERVER_POOL_PORT):
+        print("i m in validate_answer")
         """
             Checks whether the answer submitted by the user is right or wrong.
             If right then returns correct = True, success and
@@ -2376,6 +2394,7 @@ class AnswerPaper(models.Model):
                 if int(user_answer) in expected_answers:
                     result['success'] = True
                     result['error'] = ['Correct answer']
+                print('integer result------',result)
 
             elif question.type == 'string':
                 tc_status = []
@@ -2412,10 +2431,12 @@ class AnswerPaper(models.Model):
                     result['error'] = ['Correct answer']
 
             elif question.type == 'code' or question.type == "upload":
+                print("i m in code type")
                 user_dir = self.user.profile.get_user_dir()
                 url = '{0}:{1}'.format(SERVER_HOST_NAME, server_port)
                 submit(url, uid, json_data, user_dir)
                 result = {'uid': uid, 'status': 'running'}
+                print('code result',result)
         return result
 
     def regrade(self, question_id, server_port=SERVER_POOL_PORT):
@@ -3071,3 +3092,6 @@ class MicroManager(models.Model):
     def __str__(self):
         return 'MicroManager for {0} - {1}'.format(self.student.username,
                                                    self.course.name)
+
+class Invite(models.Model):
+    email = models.TextField()

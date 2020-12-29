@@ -235,7 +235,25 @@
         <center>
             <span class="badge badge-warning"><big> No rejected students yet</big></span>
         </center>
-    {% endif %}  
+    {% endif %} 
+    <!-- Member Invitation block -->
+</form> 
+<br>
+</div>
+<br>
+<div id="accordian-invite" class="card">
+    <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#invite">
+            Invite Members <i class="fa fa-angle-down"></i>
+        </a>
+    </div>
+</div>
+<div id="invite" class="collapse hide card-body" data-parent="#accordion-invite">
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
 </div>
 <!-- End Rejected Students -->
 {% endif %}
