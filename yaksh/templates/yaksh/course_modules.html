@@ -145,19 +145,8 @@
                                         {{unit.quiz.description}}
                                     {% endif %}
                                     </td>
-                                    <td>
-                                        {% if unit.type == "lesson" %}
-                                            <a href="" class="detailsbtn">
-                                                View
-                                            </a>
-                                            {% else %}
-                                            {% if unit.quiz.questionpaper_set.get %}
-                                                <a href="{% url 'yaksh:start_quiz' unit.quiz.questionpaper_set.get.id module.id course.id %}" class="detailsbtn">
-                                                    View
-                                                </a>
-                                            {% endif %}
-                                        {% endif %}
-                                    </td>
+                                    
+                                   
                                     <td>
                                     {% get_unit_status course module unit user as status %}
                                     {% if status == "completed" %}
